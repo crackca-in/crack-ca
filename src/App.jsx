@@ -1134,15 +1134,20 @@ export default function CAPrepPro() {
 
     // Check if Stripe is enabled
     if (!APP_CONFIG.stripeEnabled) {
-      // TEST MODE: simulate upgrade for testing
+      // PRE-LAUNCH: redirect to Google Form to capture payment intent
+      const selectedPlan = APP_CONFIG.plans.find(p=>p.id===planId);
       const confirmed = window.confirm(
-        `TEST MODE: Stripe is not yet configured.\n\n` +
-        `Plan: ${APP_CONFIG.plans.find(p=>p.id===planId)?.name}\n` +
-        `Price: ${APP_CONFIG.plans.find(p=>p.id===planId)?.label}\n\n` +
-        `Click OK to simulate the upgrade for testing.\n` +
-        `When Stripe is configured, this will redirect to a real payment page.`
+        `${selectedPlan?.name} (${selectedPlan?.label})\n\n` +
+        `Full access is launching soon!\n\n` +
+        `Sign up now to:\n` +
+        `- Get notified when paid plans go live\n` +
+        `- Receive an early-bird discount\n` +
+        `- Help us prioritize which papers to expand first\n\n` +
+        `Click OK to register your interest (30 seconds).`
       );
-      if (confirmed) { setPlan(planId); setScreen("dashboard"); }
+      if (confirmed) {
+        window.open("https://forms.gle/gqUXPEJEe36hMFiA7", "_blank");
+      }
       return;
     }
 
