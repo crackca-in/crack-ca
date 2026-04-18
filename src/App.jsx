@@ -1236,7 +1236,14 @@ export default function CAPrepPro() {
       {/* ═══ LANDING ═══ */}
       {screen === "landing" && (
         <div className="fade" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 20px", background: "radial-gradient(ellipse at top, #1E1B4B 0%, #0B0F19 60%)" }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>📚</div>
+          <svg width="80" height="80" viewBox="0 0 200 200" style={{ marginBottom: 16 }}>
+            <defs><linearGradient id="shieldG" x1="0" y1="0" x2="0.5" y2="1"><stop offset="0%" stopColor="#A78BFA"/><stop offset="50%" stopColor="#6366F1"/><stop offset="100%" stopColor="#4F46E5"/></linearGradient></defs>
+            <g transform="translate(100,95)">
+              <path d="M0,-80 L63,-52 L63,13 C63,57 34,80 0,95 C-34,80 -63,57 -63,13 L-63,-52 Z" fill="url(#shieldG)" opacity="0.3" stroke="url(#shieldG)" strokeWidth="2"/>
+              <path d="M0,-60 L45,-38 L45,8 C45,42 25,60 0,72 C-25,60 -45,42 -45,8 L-45,-38 Z" fill="url(#shieldG)" opacity="0.5"/>
+              <path d="M-20,3 L-6,20 L23,-14" fill="none" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+          </svg>
           <h1 style={{ fontSize: 36, fontWeight: 900, textAlign: "center", marginBottom: 8, background: "linear-gradient(135deg,#A78BFA,#6366F1,#EC4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Crack CA</h1>
           <p style={{ fontSize: 18, color: "#9CA3AF", textAlign: "center", maxWidth: 480, marginBottom: 32, lineHeight: 1.6 }}>The smartest way to crack CA Foundation. 222 exam-pattern questions with detailed explanations, real-time analytics, and timed mock tests.</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", marginBottom: 40 }}>
@@ -1262,7 +1269,14 @@ export default function CAPrepPro() {
       {screen === "login" && (
         <div className="fade" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
           <div className="card" style={{ maxWidth: 400, width: "100%", padding: 32 }}>
-            <div style={{ fontSize: 32, textAlign: "center", marginBottom: 8 }}>📚</div>
+            <svg width="56" height="56" viewBox="0 0 200 200" style={{ display: "block", margin: "0 auto 8px" }}>
+              <defs><linearGradient id="shieldL" x1="0" y1="0" x2="0.5" y2="1"><stop offset="0%" stopColor="#A78BFA"/><stop offset="50%" stopColor="#6366F1"/><stop offset="100%" stopColor="#4F46E5"/></linearGradient></defs>
+              <g transform="translate(100,95)">
+                <path d="M0,-80 L63,-52 L63,13 C63,57 34,80 0,95 C-34,80 -63,57 -63,13 L-63,-52 Z" fill="url(#shieldL)" opacity="0.3" stroke="url(#shieldL)" strokeWidth="2"/>
+                <path d="M0,-60 L45,-38 L45,8 C45,42 25,60 0,72 C-25,60 -45,42 -45,8 L-45,-38 Z" fill="url(#shieldL)" opacity="0.5"/>
+                <path d="M-20,3 L-6,20 L23,-14" fill="none" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+              </g>
+            </svg>
             <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Welcome to Crack CA</h2>
             <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>Enter your details to start practicing</p>
             <input className="inp" placeholder="Your name" value={loginForm.name} onChange={e => setLoginForm({...loginForm, name: e.target.value})} style={{ marginBottom: 12 }} />
