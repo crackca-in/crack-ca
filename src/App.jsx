@@ -1424,8 +1424,8 @@ export default function CAPrepPro() {
                           const locked = isLocked(ch);
                           const chQs = QUESTIONS.filter(q => q.chapter === ch.id || q.chapter.startsWith(ch.id.split(" (")[0].split(",")[0])).length;
                           return (
-                            <div key={ch.id} className="card" style={{ marginBottom: 8, padding: "16px 20px", cursor: locked ? "default" : "pointer", opacity: locked ? 0.5 : 1 }}
-                              onClick={() => !locked && startTest("chapter", selPaper, ch.id)}>
+                            <div key={ch.id} className="card" style={{ marginBottom: 8, padding: "16px 20px", cursor: "pointer", opacity: locked ? 0.5 : 1 }}
+                              onClick={() => locked ? setScreen("plans") : startTest("chapter", selPaper, ch.id)}>
                               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <div>
                                   <div style={{ fontWeight: 600, fontSize: 14 }}>{locked ? "🔒 " : ""}{ch.name}</div>
