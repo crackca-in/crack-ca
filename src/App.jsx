@@ -1004,24 +1004,32 @@ const ALL_CHAPTERS = PAPERS.flatMap(p => p.chapters.map(c => ({ ...c, paper: p.i
 
 export default function CAPrepPro() {
   // State
-  const [screen, setScreen] = useState("landing"); // landing, login, dashboard, paper, chapter, test, review, analytics, plans, admin
-  const [user, setUser] = useState(null); // { name, email, plan, joined }
-  const [plan, setPlan] = useState("free");
+  const [screen, setScreen] = useState("landing");
+  const [user, setUser] = useState(() => { try { const s = localStorage.getItem("crackca_user"); return s ? JSON.parse(s) : null; } catch { return null; } });
+  const [plan, setPlan] = useState(() => { try { return localStorage.getItem("crackca_plan") || "free"; } catch { return "free"; } });
   const [selPaper, setSelPaper] = useState(null);
   const [selChapter, setSelChapter] = useState(null);
-  const [testMode, setTestMode] = useState(null); // "chapter" | "mock" | "review"
+  const [testMode, setTestMode] = useState(null);
   const [testQs, setTestQs] = useState([]);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [timer, setTimer] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
-  const [history, setHistory] = useState([]); // { date, paper, chapter, score, total, pct, timeTaken }
+  const [history, setHistory] = useState(() => { try { const s = localStorage.getItem("crackca_history"); return s ? JSON.parse(s) : []; } catch { return []; } });
   const [showExplanation, setShowExplanation] = useState({});
   const [loginForm, setLoginForm] = useState({ name: "", email: "" });
   const [sideOpen, setSideOpen] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [bookmarks, setBookmarks] = useState(new Set());
   const timerRef = useRef(null);
+
+  // Persist user, plan, and history to localStorage
+  useEffect(() => { try { if (user) localStorage.setItem("crackca_user", JSON.stringify(user)); else localStorage.removeItem("crackca_user"); } catch {} }, [user]);
+  useEffect(() => { try { localStorage.setItem("crackca_plan", plan); } catch {} }, [plan]);
+  useEffect(() => { try { localStorage.setItem("crackca_history", JSON.stringify(history)); } catch {} }, [history]);
+
+  // Auto-login from localStorage
+  useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, []);
 
   // Timer
   useEffect(() => {
