@@ -100,14 +100,6 @@ const PAPERS = [
       { id: "Business Cycle and Indian Economy", wt: "12-18", free: false },
     ],
   },
-  {id:"P4G02",paper:"P4",chapter:"Business Cycle and Indian Economy",diff:"Medium",marks:1,type:"MCQ",
-    q:"During which phase of the business cycle do 'lagging indicators' such as unemployment typically reach their peak?",
-    opts:["Expansion","Peak","Trough","Recovery"],a:2,
-    exp:"Lagging indicators (unemployment, CPI, business lending) respond with a delay. Unemployment continues rising even after GDP starts contracting and only peaks at the Trough, just before recovery begins. Firms delay layoffs during contraction and delay hiring during early recovery. Leading indicators (stock prices, building permits) turn before the economy. Coincident indicators (GDP, industrial production) move with it."},
-  {id:"P4G02",paper:"P4",chapter:"Business Cycle and Indian Economy",diff:"Medium",marks:1,type:"MCQ",
-    q:"During which phase of the business cycle do 'lagging indicators' such as unemployment typically reach their peak?",
-    opts:["Expansion","Peak","Trough","Recovery"],a:2,
-    exp:"Lagging indicators (unemployment, corporate profits, labour cost per unit) respond AFTER the economy has changed direction. Unemployment continues rising through contraction and only peaks at the Trough, just before recovery begins. Firms delay hiring until confident the recovery is sustained. Leading indicators (stock prices, new orders, money supply) change BEFORE the economy turns. Coincident indicators (GDP, industrial production) move WITH the economy."},
 ];
 
 const QUESTIONS = [
@@ -998,7 +990,10 @@ const QUESTIONS = [
     q:"The repo rate is the rate at which:",
     opts:["RBI lends to commercial banks","Commercial banks lend to the public","RBI borrows from commercial banks","Government borrows from RBI"],a:0,
     exp:"Repo rate = the rate at which the RBI LENDS short-term money to commercial banks against government securities. Reverse repo rate = the rate at which RBI BORROWS from banks. When RBI increases repo rate, borrowing becomes costlier, banks raise lending rates, and money supply contracts (anti-inflationary). When repo rate decreases, the opposite happens (expansionary)."},
-
+  {id:"P4G02",paper:"P4",chapter:"Business Cycle and Indian Economy",diff:"Medium",marks:1,type:"MCQ",
+    q:"During which phase of the business cycle do 'lagging indicators' such as unemployment typically reach their peak?",
+    opts:["Expansion","Peak","Trough","Recovery"],a:2,
+    exp:"Lagging indicators (unemployment, CPI, business lending) respond with a delay. Unemployment continues rising even after GDP starts contracting and only peaks at the Trough, just before recovery begins. Firms delay layoffs during contraction and delay hiring during early recovery. Leading indicators (stock prices, building permits) turn before the economy. Coincident indicators (GDP, industrial production) move with it."},
 ];
 // ═══════════════════════════════════════════════════════════
 // CA PREP PRO - Main Application Component
