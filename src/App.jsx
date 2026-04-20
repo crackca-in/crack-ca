@@ -1555,6 +1555,186 @@ const QUESTIONS = [
     q:"The concept of 'demographic dividend' for India refers to:",
     opts:["Money paid to senior citizens","Economic growth potential from a large working-age population relative to dependents","Government subsidies for population control","Pension reforms"],a:1,
     exp:"Demographic dividend: accelerated economic growth that arises when a country's working-age population (15-64) is large relative to its dependent population (children + elderly). India is currently in this phase, projected to last until around 2040. Realising the dividend requires skilled workforce, quality education, healthcare, and job creation; otherwise the bulge becomes a liability."},
+  {id:"P4C1Q06",paper:"P4",chapter:"Nature and Scope of Business Economics",diff:"Medium",marks:2,type:"MCQ",
+    q:"A rational person does not act unless:",
+    opts:["The action is ethical","The action produces marginal cost that exceeds marginal revenue","The action produces marginal benefits that exceed marginal costs","The action makes money for the person"],a:2,
+    exp:"Rational choice theory: a rational decision-maker compares marginal benefit (extra gain from one more unit of an action) with marginal cost (extra cost of that action). The action is taken only when marginal benefit > marginal cost. Ethics and money-making are not the defining criteria in economic rationality; this is a cost-benefit calculus at the margin. If MC > MB, the person is worse off by acting."},
+  {id:"P4C1Q07",paper:"P4",chapter:"Nature and Scope of Business Economics",diff:"Medium",marks:2,type:"MCQ",
+    q:"In an economy dominated by private enterprises, demand for electric vehicles (EVs) rises sharply due to rising fuel prices. Battery prices increase, labour wages remain constant, and profits in the EV sector exceed those in traditional automobile manufacturing. The shift of producers from conventional vehicles to EVs primarily indicates that:",
+    opts:["Government planning has redirected resources","Consumer sovereignty has weakened","Price mechanism has altered relative profitability","Production is guided by social welfare objectives"],a:2,
+    exp:"In a market economy, relative profitability signals guide resource allocation. When EV profits exceed those in traditional vehicles, producers shift capital and labour toward EVs. This is the price mechanism at work: changing relative prices and profits redirect production without any central authority. Consumer sovereignty is actually reinforced (consumers' preferences drove fuel prices and EV demand), not weakened."},
+  {id:"P4C1Q08",paper:"P4",chapter:"Nature and Scope of Business Economics",diff:"Medium",marks:2,type:"MCQ",
+    q:"In the EV industry case, if labour continues to be used intensively despite high battery prices, the most logical explanation is:",
+    opts:["Labour is relatively cheaper than capital","Capital is freely available","The economy is socialist","Producers ignore cost minimization"],a:0,
+    exp:"In cost-minimising production, firms substitute relatively cheaper factors for relatively expensive ones. High battery prices (capital) with stable labour wages make labour relatively cheaper. The rational response is to continue using labour intensively and economise on expensive capital. This is the 'how to produce' question answered through factor substitution based on relative prices."},
+  {id:"P4C1Q09",paper:"P4",chapter:"Nature and Scope of Business Economics",diff:"Easy",marks:2,type:"MCQ",
+    q:"In the EV industry case, the decision regarding 'what to produce' is mainly influenced by:",
+    opts:["Income equality","Administered prices","Market demand and profit signals","Central planning authority"],a:2,
+    exp:"'What to produce' is one of the three central economic problems. In a market economy, the answer emerges from consumer demand (market signals for EVs) and producer profit expectations (higher margins in EVs than conventional cars). Central planning, administered prices, and income equality goals are characteristics of socialist or heavily regulated economies, not of a private-enterprise-dominated market economy as described in the case."},
+  {id:"P4C2Q15",paper:"P4",chapter:"Theory of Demand and Supply",diff:"Hard",marks:2,type:"MCQ",
+    q:"Which elasticity concept helps governments decide how the tax burden will be shared between producers and consumers?",
+    opts:["Cross elasticity","Price elasticity","Income elasticity","Advertisement elasticity"],a:1,
+    exp:"Tax incidence depends on the relative price elasticity of demand and supply. When demand is more inelastic than supply, consumers bear more of the tax burden (they cannot easily reduce consumption). When supply is more inelastic, producers bear more. Governments use price elasticity analysis when taxing goods (especially sin goods like tobacco and alcohol) to predict the actual revenue and the distribution of burden."},
+  {id:"P4C2Q16",paper:"P4",chapter:"Theory of Demand and Supply",diff:"Hard",marks:2,type:"MCQ",
+    q:"Suppose that at a price of Rs.300 per month there are 30,000 subscribers to cable television. If the price is raised to Rs.400 per month, the number of subscribers falls to 20,000. Using the arc elasticity (midpoint) method, the price elasticity of demand is:",
+    opts:["1.4","0.66","0.75","2.0"],a:0,
+    exp:"Arc elasticity (midpoint method): E = (ΔQ / avg Q) / (ΔP / avg P). ΔQ = 20,000 - 30,000 = -10,000. Average Q = (20,000 + 30,000)/2 = 25,000. So ΔQ/avg Q = -10,000/25,000 = -0.40. ΔP = 400 - 300 = 100. Average P = (300 + 400)/2 = 350. So ΔP/avg P = 100/350 = 0.2857. Elasticity (absolute value) = 0.40 / 0.2857 = 1.4. Since E > 1, demand for cable TV is elastic in this price range."},
+  {id:"P4C3Q16",paper:"P4",chapter:"Theory of Production and Cost",diff:"Hard",marks:2,type:"MCQ",
+    q:"The production function Q = 4L^(1/2) K^(2/3) exhibits:",
+    opts:["Increasing returns to scale","Decreasing returns to scale","Constant returns to scale","Increasing returns to a factor"],a:0,
+    exp:"For a Cobb-Douglas production function Q = A·L^α·K^β, returns to scale are determined by the sum α + β. If α + β > 1, increasing returns to scale. If = 1, constant. If < 1, decreasing. Here α = 1/2 and β = 2/3, so α + β = 3/6 + 4/6 = 7/6 ≈ 1.167, which is greater than 1. Therefore the function exhibits increasing returns to scale: if both inputs are doubled, output more than doubles."},
+  {id:"P4C3Q17",paper:"P4",chapter:"Theory of Production and Cost",diff:"Medium",marks:2,type:"MCQ",
+    q:"Given the total cost function TC = 2000 + 15Q - 6Q² + Q³, the Total Fixed Cost (TFC) at Q = 2000 is:",
+    opts:["Rs.2,000","Rs.975","Rs.30,000","Cannot be determined"],a:0,
+    exp:"Total Fixed Cost is the portion of total cost that does not vary with the level of output Q. In a cost function, TFC is the CONSTANT term (the part with no Q in it). Here TC = 2000 + 15Q - 6Q² + Q³. The constant term is 2000. Therefore TFC = Rs.2,000, regardless of Q. This is true at Q = 2000, Q = 1, or any other output level: fixed costs by definition do not depend on quantity produced."},
+  {id:"P4C3Q18",paper:"P4",chapter:"Theory of Production and Cost",diff:"Easy",marks:2,type:"MCQ",
+    q:"Which of the following short-run cost curves declines continuously as output increases?",
+    opts:["Average Total Cost","Marginal Cost","Average Fixed Cost","Average Variable Cost"],a:2,
+    exp:"Average Fixed Cost (AFC) = Total Fixed Cost / Output. Since TFC is constant but output Q keeps increasing, AFC = TFC/Q keeps falling continuously (approaches zero asymptotically but never reaches it). ATC, AVC, and MC are all U-shaped in the short run because they incorporate variable costs that first fall (spreading overhead, specialisation) then rise (diminishing returns). AFC uniquely keeps declining because fixed costs are spread across ever more units."},
+  {id:"P4C4Q14",paper:"P4",chapter:"Price Determination in Different Markets",diff:"Hard",marks:2,type:"MCQ",
+    q:"Why does a monopolist's marginal revenue (MR) curve always lie below its average revenue (AR) curve?",
+    opts:["Because of rising marginal cost","Because a monopolist sells different output at different prices","Because fixed cost increases","Because of multiple sellers"],a:1,
+    exp:"In monopoly, the firm faces the entire downward-sloping market demand curve, which is its AR curve. To sell an additional unit, the monopolist must lower price on ALL units, not just the extra one. Therefore, MR (revenue from the extra unit) is less than the price received (AR) because of the revenue lost on the previous units now sold at the lower price. Mathematically, if AR is downward-sloping, MR lies below it at every output level. In perfect competition, price is constant so MR = AR = P."},
+  {id:"P4C4Q15",paper:"P4",chapter:"Price Determination in Different Markets",diff:"Medium",marks:2,type:"MCQ",
+    q:"In a collusive oligopoly, the price is decided by:",
+    opts:["Each firm independently","The price leader","The industry as a whole","Consumers"],a:1,
+    exp:"In collusive oligopoly, firms coordinate rather than compete. One form is price leadership, where one dominant firm (often the largest or lowest-cost) sets the price and other firms follow. Types of price leadership include dominant-firm leadership, barometric leadership, and collusive leadership. This avoids destructive price wars while mimicking monopoly profits. OPEC acts as a price leader in global oil markets. Explicit collusion of this kind is typically illegal under competition law but persists tacitly in many industries."},
+  {id:"P4C5Q05",paper:"P4",chapter:"Business Cycles",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following is NOT an internal (endogenous) cause of business cycles?",
+    opts:["Fluctuations in effective demand","Variations in government spending","Technology shock","Changes in money supply"],a:2,
+    exp:"Internal (endogenous) causes arise from within the economic system: fluctuations in effective demand (consumption, investment), changes in government spending, and changes in money supply are all driven by domestic agents and institutions. A technology shock is an EXTERNAL (exogenous) cause, an unpredictable disruption from outside the normal functioning of the economy, along with wars, natural disasters, and pandemics. Internal causes can be moderated by policy; external shocks generally cannot be prevented, only absorbed."},
+  {id:"P4C5Q06",paper:"P4",chapter:"Business Cycles",diff:"Medium",marks:2,type:"MCQ",
+    q:"Monetary and fiscal policy changes can cause business cycles by:",
+    opts:["Eliminating investment risk","Altering aggregate demand","Fixing exchange rates","Standardising prices"],a:1,
+    exp:"Policy-induced business cycles occur when monetary and fiscal policies shift aggregate demand. A loose fiscal or monetary policy (government spending up, taxes cut, interest rates cut, money supply expanded) boosts AD and creates expansion; tight policy reduces AD and can trigger recession. This is why policy timing matters: excessive easing can create booms that turn into busts, and premature tightening can cut off growth. Both Keynesians and Monetarists agree that policy influences the cycle, though they disagree on how actively it should be used."},
+  {id:"P4C5Q07",paper:"P4",chapter:"Business Cycles",diff:"Easy",marks:2,type:"MCQ",
+    q:"Which of the following marks the beginning of a contraction in the business cycle?",
+    opts:["Peak","Expansion","Recession","Trough"],a:0,
+    exp:"The four phases of a business cycle are Expansion → Peak → Contraction (Recession) → Trough, then back to Expansion. The Peak is the highest point of economic activity before decline begins, marking the transition FROM expansion TO contraction. The Trough is the lowest point, marking the start of the next expansion. 'Recession' is another name for the contraction phase itself, not its starting point."},
+  {id:"P4C6Q10",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"India mainly uses which approach for national income estimation?",
+    opts:["Income method only","Product method only","Combination of product and income methods","Expenditure method only"],a:2,
+    exp:"The Central Statistics Office (CSO), now NSO (National Statistical Office) under MoSPI, estimates India's national income using a COMBINATION of methods. The product (value-added) method is used for agriculture, manufacturing, and services. The income method is used where output data is hard to measure directly (e.g. government services, real estate). The expenditure method is used mainly as a cross-check. Using multiple methods gives more reliable estimates than relying on any single approach and allows cross-verification."},
+  {id:"P4C6Q11",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"Real GDP is preferred over Nominal GDP for welfare comparisons because it:",
+    opts:["Includes transfer payments","Is measured at current prices","Accounts for price level changes","Excludes net exports"],a:2,
+    exp:"Nominal GDP is measured in current prices, so it rises both when output rises AND when prices rise (inflation). Real GDP is measured in constant (base year) prices, stripping out the price effect to show genuine output change. For welfare comparisons over time, real GDP is essential: if nominal GDP doubles but prices also double, real output (and living standards) hasn't changed. Real GDP is computed as: Real GDP = Nominal GDP × (Base year price index / Current price index)."},
+  {id:"P4C6Q12",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"The Keynesian theory of national income was developed primarily to explain:",
+    opts:["Long-run full employment equilibrium","Persistent unemployment and demand-deficient recessions","Supply side shocks","Classical price flexibility"],a:1,
+    exp:"Keynes wrote 'The General Theory of Employment, Interest and Money' (1936) during the Great Depression specifically to explain why classical economics (which assumed markets clear automatically at full employment) failed to explain persistent mass unemployment. Keynes argued that insufficient aggregate demand could cause economies to settle at equilibrium BELOW full employment, and stay there without government intervention. This 'demand-deficient unemployment' became the cornerstone of modern macroeconomic policy."},
+  {id:"P4C6Q13",paper:"P4",chapter:"Determination of National Income",diff:"Hard",marks:2,type:"MCQ",
+    q:"The balanced budget multiplier equals:",
+    opts:["Zero","One","Greater than one","Negative"],a:1,
+    exp:"The balanced budget multiplier (Haavelmo theorem) states that an equal increase in government spending and taxes increases national income by exactly that amount, so the multiplier equals 1. Reason: the spending multiplier (1/(1-MPC)) is bigger than the tax multiplier (-MPC/(1-MPC)) because government spending directly adds to AD, while a tax cut only adds the portion that consumers spend (the rest is saved). Net effect: ΔY = ΔG = ΔT. An increase of Rs.100 in both spending and taxes raises GDP by Rs.100. Budget remains balanced, yet GDP rises."},
+  {id:"P4C6Q14",paper:"P4",chapter:"Determination of National Income",diff:"Easy",marks:2,type:"MCQ",
+    q:"Which of the following is a leakage in the Keynesian circular flow of income?",
+    opts:["Government spending","Exports","Savings","Investment"],a:2,
+    exp:"In the circular flow, leakages are withdrawals from the income stream and injections are additions to it. Leakages: Savings (S), Taxes (T), Imports (M), all reduce domestic demand. Injections: Investment (I), Government spending (G), Exports (X), all add to domestic demand. Equilibrium requires S + T + M = I + G + X. Savings is the classic leakage: income earned but not spent domestically leaves the flow until it is re-injected via investment by firms."},
+  {id:"P4C6Q15",paper:"P4",chapter:"Determination of National Income",diff:"Hard",marks:2,type:"MCQ",
+    q:"Calculate National Income using the expenditure method: Consumption = Rs.1,000 crore, Investment = Rs.500 crore, Government Purchases = Rs.200 crore, Exports = Rs.200 crore, Imports = Rs.400 crore.",
+    opts:["Rs.1,500 crore","Rs.1,800 crore","Rs.2,000 crore","None of these"],a:0,
+    exp:"The expenditure method: GDP = C + I + G + (X - M), where net exports (X - M) is the trade balance. Here: C = 1,000; I = 500; G = 200; X = 200; M = 400. Net exports = 200 - 400 = -200 (trade deficit). GDP = 1,000 + 500 + 200 + (-200) = 1,500 crore. The negative trade balance reduces GDP because imports represent spending on foreign (not domestic) production. This is one of three equivalent methods (income method and product method should give the same answer)."},
+  {id:"P4C6Q16",paper:"P4",chapter:"Determination of National Income",diff:"Easy",marks:2,type:"MCQ",
+    q:"In a two-sector Keynesian model, aggregate demand (AD) is less than aggregate supply (AS) at the current level of income. This situation will lead to:",
+    opts:["Rise in output","Increase in employment","Fall in national income","Full employment"],a:2,
+    exp:"When AD < AS at current income, firms cannot sell all they produce. Unsold goods accumulate as unplanned inventory. Firms respond by cutting production, which reduces employment and income in the next period. The economy contracts until AD catches up with the lower AS. This is the Keynesian adjustment mechanism: quantity adjusts, not prices (contrast with classical theory where prices would fall and restore equilibrium at full employment). The adjustment continues until AD = AS at a new, lower equilibrium income."},
+  {id:"P4C6Q17",paper:"P4",chapter:"Determination of National Income",diff:"Easy",marks:2,type:"MCQ",
+    q:"Following the previous scenario of AD < AS, the adjustment process will continue until:",
+    opts:["MPC becomes zero","Prices rise","AD equals AS","Investment becomes zero"],a:2,
+    exp:"Keynesian equilibrium requires AD = AS (which is the same as S = I in a two-sector model). If AD < AS, income falls, which reduces consumption and savings. As income falls, AS also falls (because output adjusts downward). The process continues until aggregate demand exactly equals aggregate supply, defining the new equilibrium level of national income. This equilibrium may be BELOW full employment, which is the key Keynesian insight explaining persistent unemployment."},
+  {id:"P4C6Q18",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"According to Keynes, what can cause involuntary unemployment in an economy?",
+    opts:["High interest rates","Insufficient aggregate demand","Government intervention","Excessive savings"],a:1,
+    exp:"Keynes argued that the primary cause of involuntary unemployment is insufficient aggregate demand. When AD is too low to employ all available workers at the going wage, firms do not hire even workers willing to work at current wages. This contradicts classical theory (which said unemployment only arises if wages are too high and workers refuse to take jobs). Keynes's policy prescription: boost AD through government spending or monetary expansion to close the 'demand gap' and restore full employment. 'Excessive savings' can contribute (paradox of thrift) but is a symptom of the deeper cause, which is inadequate spending."},
+  {id:"P4C6Q19",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"The concept of 'animal spirits' in Keynesian theory refers to:",
+    opts:["The unpredictable behaviour of financial markets","Psychological factors influencing economic decisions","Government regulations affecting business confidence","The impact of interest rates on investment"],a:1,
+    exp:"Keynes coined 'animal spirits' to describe the spontaneous urge to action, optimism, and confidence (or pessimism and fear) that drives business investment decisions beyond pure rational calculation. When animal spirits are high, firms invest aggressively even in uncertain conditions. When confidence collapses, investment freezes even with attractive interest rates. Animal spirits explain why monetary policy alone often fails in severe recessions (the 'pushing on a string' problem): cutting rates doesn't restore investment if business sentiment is broken. The concept is central to Post-Keynesian and behavioural economics."},
+  {id:"P4C6Q20",paper:"P4",chapter:"Determination of National Income",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following is a limitation of using GDP as a measure of economic well-being?",
+    opts:["It includes only monetary transactions","It does not account for income distribution","It considers both market and non-market activities","It is not affected by inflation"],a:1,
+    exp:"GDP measures total output but ignores how it is distributed. Two countries with the same GDP can have very different welfare outcomes: one with broad prosperity, the other with extreme inequality. Other GDP limitations: excludes non-market activities (household work, volunteer work), ignores environmental degradation, doesn't capture quality of life, counts 'bad' activities (disaster rebuilding, pollution cleanup) as positive. Alternative measures like Human Development Index (HDI), Gini coefficient, and Genuine Progress Indicator (GPI) attempt to address some of these gaps."},
+  {id:"P4C7Q08",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the fiscal functions of government primarily deals with correcting inefficiencies caused by market failure?",
+    opts:["Stabilization function","Allocation function","Redistribution function","Debt management"],a:1,
+    exp:"Musgrave's allocation function addresses market failures where the private market allocates resources inefficiently. Examples: public goods (national defence) that private markets underprovide, externalities (pollution, education) where social and private costs/benefits diverge, merit/demerit goods (healthcare, tobacco) where markets fail to serve long-term welfare. The stabilization function deals with business cycles (inflation, unemployment); the redistribution function addresses equity through taxes and transfers. All three functions are pursued simultaneously in practice."},
+  {id:"P4C7Q09",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"A government mandate requiring accurate product labelling primarily corrects which type of market failure?",
+    opts:["Public goods failure","Demerit goods only","Information failure","Market power failure"],a:2,
+    exp:"Information failure (asymmetric information) occurs when buyers and sellers have unequal knowledge about product characteristics, leading to suboptimal decisions. Mandatory labelling (nutrition facts, ingredients, origin, warnings) corrects this by forcing sellers to disclose material information buyers could not otherwise verify. Classic examples: food nutrition labels, cigarette warnings, drug side-effect disclosures, financial product disclaimers. Without such mandates, markets may suffer from adverse selection (lemons problem) where quality products are driven out by information-poor low-quality ones."},
+  {id:"P4C7Q10",paper:"P4",chapter:"Public Finance",diff:"Easy",marks:2,type:"MCQ",
+    q:"Automatic stabilizers in a government budget include:",
+    opts:["Progressive taxes","Tariffs","Export subsidies","Exchange controls"],a:0,
+    exp:"Automatic stabilizers are fiscal mechanisms that dampen business cycles WITHOUT requiring discretionary policy action. Progressive taxes are the classic example: during booms, rising incomes push people into higher tax brackets, extracting more revenue and cooling aggregate demand; during recessions, falling incomes reduce tax burdens automatically, supporting demand. Unemployment benefits are another automatic stabilizer (payouts rise in recessions). These operate 'automatically' as the economy moves through cycles, providing counter-cyclical support without legislative lag."},
+  {id:"P4C7Q11",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"Public goods are under-provided by markets because they are:",
+    opts:["Rivalrous and excludable","Rivalrous and non-excludable","Non-rivalrous and excludable","Non-rivalrous and non-excludable"],a:3,
+    exp:"Pure public goods have two defining characteristics: non-rivalry (one person's use doesn't reduce availability to others, like a lighthouse beam) and non-excludability (impossible or too costly to prevent non-payers from benefiting). This creates a free-rider problem: why pay if you can benefit without paying? Private firms cannot profitably provide such goods because they cannot charge users. Government must therefore fund them through taxes. Classic examples: national defence, street lighting, basic scientific research, clean air."},
+  {id:"P4C7Q12",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following is a limitation on the effectiveness of fiscal policy?",
+    opts:["Flexible prices","Time lag in implementation","High tax compliance","Balanced budget"],a:1,
+    exp:"Fiscal policy suffers from three key lags: (1) Recognition lag (time to identify a problem via economic data), (2) Decision lag (legislative process to approve tax/spending changes), (3) Implementation lag (time for the policy to take effect). By the time a stimulus package passes, the recession may be easing; by the time austerity is legislated, the boom may be cooling. This is why monetary policy (faster-acting through central bank decisions) is often preferred for fine-tuning. High tax compliance and flexible prices would actually HELP fiscal policy work, not hinder it."},
+  {id:"P4C7Q13",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"If governments make it compulsory to avail insurance protection, it is because:",
+    opts:["Insurance companies need to be running profitably","Insurance will generate moral hazard and adverse selection","Insurance is a merit good and government wants people to consume it","None of the above"],a:2,
+    exp:"Merit goods are goods society values more highly than individuals tend to, because individuals systematically under-consume them (due to short-sightedness, ignorance of long-term benefits, or positive externalities). Examples: education, preventive healthcare, insurance. Left to free choice, many people under-insure themselves (underestimating risk, present bias), imposing costs on society when disasters occur. Compulsory insurance (vehicle third-party, health insurance mandates) corrects this under-consumption. Moral hazard and adverse selection are actually PROBLEMS with insurance markets, not reasons to mandate insurance."},
+  {id:"P4C7Q14",paper:"P4",chapter:"Public Finance",diff:"Medium",marks:2,type:"MCQ",
+    q:"When the market quantity of a good is greater than the socially optimal quantity, it is a case of:",
+    opts:["Positive externality","Negative externality","Public goods","None of these"],a:1,
+    exp:"Negative externality: when production or consumption imposes costs on third parties not reflected in market price. Example: factory pollution harms neighbours, but factories don't pay for that harm. Result: market price is too LOW (doesn't include the external cost), so the market quantity produced/consumed is HIGHER than the socially optimal level. Corrective policies: Pigouvian taxes (raise price to reflect true social cost), regulation (caps on pollution), tradable permits. Positive externality has the opposite problem: market underprovides (e.g. vaccinations benefit herd immunity but individuals don't factor that in)."},
+  {id:"P4C8Q08",paper:"P4",chapter:"Money Market",diff:"Medium",marks:2,type:"MCQ",
+    q:"According to the Classical Quantity Theory of Money, demand for money primarily depends on:",
+    opts:["Interest rate","Price level and transactions","Wealth distribution","Speculative motives"],a:1,
+    exp:"Classical Quantity Theory (Fisher's equation: MV = PT) says money is demanded purely to facilitate transactions. Money demand depends on: price level (P), volume of transactions (T), and inversely on velocity (V). No speculative or interest-rate motive. Keynes later broadened this: his liquidity preference theory added interest-rate-sensitive speculative demand and precautionary demand. The Baumol-Tobin model further refined transactions demand. Classical theory's simplicity is its limitation: it cannot explain why money holdings change with interest rates (which we observe in data)."},
+  {id:"P4C8Q09",paper:"P4",chapter:"Money Market",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following forms high-powered money (Reserve Money / M0)?",
+    opts:["Currency with public","Bank reserves with central bank","Currency with banks","All of the above"],a:3,
+    exp:"High-powered money (H), also called Reserve Money or Monetary Base (M0), is the total monetary liability of the central bank. It equals: Currency in circulation (with public) + Currency held by commercial banks in their vaults + Banks' deposits with the central bank (reserves). In India's RBI terminology, M0 = Currency in Circulation + Bankers' Deposits with RBI + Other Deposits with RBI. It's called 'high-powered' because banks can create multiple rupees of deposit money on top of each rupee of reserve money, through the money multiplier mechanism."},
+  {id:"P4C8Q10",paper:"P4",chapter:"Money Market",diff:"Hard",marks:2,type:"MCQ",
+    q:"Which of the following factors reduces the size of the money multiplier?",
+    opts:["Lower reserve ratio","Increase in currency holdings by public","Higher bank lending","Lower interest rates"],a:1,
+    exp:"The money multiplier depends inversely on two leakages from the banking system: (1) Cash reserve ratio r (how much banks must hold as reserves), and (2) Currency-deposit ratio c (how much of money people hold as cash rather than deposits). Money multiplier = (1 + c)/(r + c). When the public holds more currency (higher c), less money flows through banks as deposits, so there's less base for banks to lend and re-lend, shrinking the multiplier. Lower reserve ratios would INCREASE the multiplier; higher bank lending is a SYMPTOM of a larger multiplier, not a cause."},
+  {id:"P4C8Q11",paper:"P4",chapter:"Money Market",diff:"Medium",marks:2,type:"MCQ",
+    q:"An open market sale of government securities by the central bank will:",
+    opts:["Increase money supply","Decrease money supply","Leave money supply unchanged","Increase fiscal deficit"],a:1,
+    exp:"When the central bank SELLS securities in open market operations (OMO): buyers (banks, institutions, public) pay cash to the central bank to receive the securities. Cash leaves the banking system and enters the central bank, reducing commercial banks' reserves. Lower reserves mean banks can lend less, shrinking the money supply through the multiplier. OMO sales are contractionary and used to fight inflation or cool an overheating economy. OMO purchases do the opposite (expand money supply). This is the RBI's most frequently used tool because it's flexible and reversible."},
+  {id:"P4C8Q12",paper:"P4",chapter:"Money Market",diff:"Medium",marks:2,type:"MCQ",
+    q:"Quantitative Easing (QE) as a monetary policy tool aims to:",
+    opts:["Reduce credit availability","Increase money supply by buying financial assets","Increase reserve requirements","Raise policy rates"],a:1,
+    exp:"QE is an unconventional monetary policy used when conventional tools (like cutting interest rates) have reached their limit, especially the zero lower bound. The central bank creates reserves and uses them to buy long-term financial assets (government bonds, mortgage-backed securities). This injects liquidity, lowers long-term interest rates, and encourages risk-taking. Prominent examples: US Federal Reserve's QE1/QE2/QE3 after 2008, ECB's asset purchase programme, RBI's 'Operation Twist' variant. QE expands central bank balance sheets dramatically. Side effects include asset price inflation and moral hazard concerns."},
+  {id:"P4C8Q13",paper:"P4",chapter:"Money Market",diff:"Hard",marks:2,type:"MCQ",
+    q:"A contractionary monetary policy is LEAST effective in influencing output when:",
+    opts:["Interest elasticity of investment is high","The economy operates under a liquidity trap","Exchange rates are flexible","Asset prices respond strongly to interest rates"],a:1,
+    exp:"Keynes's liquidity trap: when interest rates are near zero, monetary policy loses traction. Further rate cuts cannot push rates below (much) zero, so monetary expansion fails to stimulate. By the same logic, monetary contraction via raising already-low rates has limited effect because investment demand is also unresponsive at those levels. Japan in the 1990s-2000s was the classic case. Other cases listed would actually INCREASE monetary policy effectiveness: high interest-elasticity of investment, flexible exchange rates, responsive asset prices are all transmission channels. In a liquidity trap, fiscal policy tends to be more effective than monetary."},
+  {id:"P4C9Q06",paper:"P4",chapter:"International Trade",diff:"Hard",marks:2,type:"MCQ",
+    q:"An increase in the Real Effective Exchange Rate (REER), holding the nominal exchange rate constant, necessarily implies that:",
+    opts:["Domestic inflation is lower than foreign inflation","Domestic inflation exceeds foreign inflation","Trade balance must improve","Capital inflows will increase"],a:1,
+    exp:"REER = Nominal Effective Exchange Rate × (Domestic price index / Foreign price index), weighted across trading partners. It measures the real purchasing power of a currency against a basket of partner currencies, adjusted for relative inflation. If nominal exchange rate is constant but REER rises, the ratio of domestic to foreign prices must have risen, meaning domestic inflation exceeds foreign inflation. A rising REER signals loss of competitiveness (domestic goods become relatively more expensive), which tends to worsen (not improve) the trade balance over time. RBI publishes REER indices for 6-country and 36-country baskets."},
+  {id:"P4C9Q07",paper:"P4",chapter:"International Trade",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following will NOT be a consequence of an import tariff?",
+    opts:["An increase in the price of the product in the domestic market","Reduced competitive pressure by foreign firms on the domestic producers","Increased level of supply in the domestic market","None of the above is correct"],a:2,
+    exp:"An import tariff makes foreign goods more expensive in the domestic market. Consequences: (1) Domestic prices rise (tariff is passed on partially or fully to consumers). (2) Domestic producers face less competition from now-pricier imports. (3) Domestic producers may increase production, but total market supply (domestic + imports) typically FALLS because expensive imports decline more than domestic production rises. Therefore 'increased total supply' is NOT a consequence. Tariffs redistribute income from consumers (who pay more) to producers (who sell more at higher prices) and to government (tariff revenue), with net efficiency loss (deadweight loss)."},
+  {id:"P4C9Q08",paper:"P4",chapter:"International Trade",diff:"Hard",marks:2,type:"MCQ",
+    q:"A high real exchange rate in an economy is most likely to lead to:",
+    opts:["Current account deficit","Fiscal deficit","Current account surplus","Increase in foreign exchange reserves"],a:0,
+    exp:"A high real exchange rate means domestic goods are expensive relative to foreign goods. This reduces export competitiveness (foreigners buy less from us) and increases imports (foreign goods look cheap). Falling exports plus rising imports worsens the trade balance, driving the current account into deficit. This is often a policy concern because a persistent current account deficit must be financed by capital inflows (borrowing or asset sales) and can trigger currency crises if those flows reverse. Fiscal deficit is a different concept entirely (government budget), though they can be linked (twin deficits hypothesis)."},
+  {id:"P4C10Q05",paper:"P4",chapter:"Indian Economy",diff:"Medium",marks:2,type:"MCQ",
+    q:"The major economic crisis that triggered the sweeping economic reforms in India in 1991 was:",
+    opts:["Banking crisis","Balance of Payments crisis","Agricultural crisis","Fiscal surplus"],a:1,
+    exp:"India's 1991 Balance of Payments crisis was the immediate trigger for the New Economic Policy. Foreign exchange reserves had depleted to barely 2 weeks of imports. India had to airlift 47 tonnes of gold to the Bank of England as collateral for a loan. The crisis was caused by: Gulf War oil shock, loss of Soviet trade partner, unsustainable fiscal and trade deficits, and collapse of investor confidence. In response, PM Narasimha Rao and FM Manmohan Singh launched economic liberalisation: devaluation, removal of licence raj, reduction of trade barriers, opening to FDI, and disinvestment of PSUs. The reforms fundamentally restructured the Indian economy."},
+  {id:"P4C10Q06",paper:"P4",chapter:"Indian Economy",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which reform measure was aimed at reducing inefficiency in public sector enterprises in India?",
+    opts:["Nationalization","Disinvestment","Licensing","Import quotas"],a:1,
+    exp:"Disinvestment is the partial or complete sale of government equity in public sector undertakings (PSUs) to private investors. Initiated as part of the 1991 reforms, it aims to: reduce fiscal burden of loss-making PSUs, improve efficiency through private management, raise revenue for the government, and deepen capital markets. Examples: partial disinvestment of ONGC, Indian Oil, Coal India; privatisation of Air India (2021), BPCL (partial). Nationalization (opposite process) was done in the 1950s-70s. Licensing and import quotas were the controls DISMANTLED by 1991 reforms."},
+  {id:"P4C10Q07",paper:"P4",chapter:"Indian Economy",diff:"Medium",marks:2,type:"MCQ",
+    q:"The term 'Hindu rate of growth' refers to:",
+    opts:["High economic growth in 1950s","Sustained growth above 8%","Low growth before 1991 reforms","Rapid service sector expansion"],a:2,
+    exp:"'Hindu rate of growth', a term coined by economist Raj Krishna in the 1970s, describes India's sluggish 3-4% annual GDP growth rate from the 1950s through the 1980s. The name was commentary on how Indian growth was persistently low compared to East Asian economies despite planning and heavy industrial development. The term carried no religious meaning but referred to the perceived cultural patience with slow progress. Post-1991 reforms broke this pattern: India's growth accelerated to 6-8% in subsequent decades, making the 'Hindu rate' a historical term. The phrase is now often used to contrast India's pre- and post-reform eras."},
+  {id:"P4C10Q08",paper:"P4",chapter:"Indian Economy",diff:"Medium",marks:2,type:"MCQ",
+    q:"Which of the following is a strategy adopted to promote globalization of the Indian economy?",
+    opts:["Partial convertibility of the rupee","Reduction in tariffs","Increase in equity limit for foreign investment","All of the above"],a:3,
+    exp:"India's globalization strategy post-1991 included multiple complementary measures: (1) Partial convertibility of the rupee (current account convertibility in 1994, gradual capital account opening), allowing freer cross-border currency conversion for trade. (2) Reduction in tariffs from peak rates of 150-300% to current WTO-compliant levels, opening Indian markets to global competition. (3) Increase in FDI equity limits from low caps to 74%, 100% in most sectors, attracting foreign capital and technology. Together, these measures integrated India into the global economy, transforming it from a largely closed to a largely open economy."},
 ];
 // ═══════════════════════════════════════════════════════════
 // CA PREP PRO - Main Application Component
@@ -1578,6 +1758,7 @@ export default function CAPrepPro() {
   const [timerActive, setTimerActive] = useState(false);
   const [history, setHistory] = useState(() => { try { const s = localStorage.getItem("crackca_history"); return s ? JSON.parse(s) : []; } catch { return []; } });
   const [showExplanation, setShowExplanation] = useState({});
+  const [filterWrongOnly, setFilterWrongOnly] = useState(false);
   const [loginForm, setLoginForm] = useState({ name: "", email: "" });
   const [sideOpen, setSideOpen] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
@@ -1820,7 +2001,8 @@ export default function CAPrepPro() {
             <text x="340" y="485" textAnchor="middle" fontFamily="Inter,system-ui,sans-serif" fontSize="20" fontWeight="500" fill="#9CA3AF" letterSpacing="4">CA FOUNDATION</text>
             <rect x="178" y="520" width="324" height="3" rx="1.5" fill="url(#landingAccent)" opacity="0.5"/>
           </svg>
-          <p style={{ fontSize: 18, color: "#9CA3AF", textAlign: "center", maxWidth: 480, marginBottom: 32, lineHeight: 1.6 }}>The smartest way to crack CA Foundation. 363 exam-pattern questions with detailed explanations, real-time analytics, and timed mock tests.</p>
+          <p style={{ fontSize: 24, fontWeight: 600, color: "#E5E7EB", textAlign: "center", maxWidth: 560, marginBottom: 12, lineHeight: 1.4 }}>The smartest way to crack CA Foundation.</p>
+          <p style={{ fontSize: 17, fontWeight: 400, color: "#9CA3AF", textAlign: "center", maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>400+ exam-pattern questions with detailed explanations, real-time analytics, and timed mock tests.</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", marginBottom: 40 }}>
             {["4 Papers Covered", "Exam-Pattern MCQs", "Detailed Explanations", "Performance Analytics", "Negative Marking", "Timed Mock Tests"].map((f, i) => (
               <span key={i} className="tag" style={{ background: "#1E1B4B", color: "#A78BFA", fontSize: 12, padding: "6px 14px" }}>{f}</span>
@@ -2107,61 +2289,182 @@ export default function CAPrepPro() {
                         (() => {
                           const latest = history[0];
                           const paper = PAPERS.find(p => p.id === testQs[0]?.paper);
+
+                          // Classify every question
+                          const wrongIdx = [];
+                          const skippedIdx = [];
+                          const correctIdx = [];
+                          testQs.forEach((q, i) => {
+                            const ua = answers[i];
+                            if (ua === undefined) skippedIdx.push(i);
+                            else if (ua === q.a) correctIdx.push(i);
+                            else wrongIdx.push(i);
+                          });
+
+                          // Chapter weakness analysis: group wrong + skipped by chapter
+                          const chapterStats = {};
+                          testQs.forEach((q, i) => {
+                            const key = q.chapter;
+                            if (!chapterStats[key]) chapterStats[key] = { total: 0, wrong: 0, skipped: 0 };
+                            chapterStats[key].total++;
+                            const ua = answers[i];
+                            if (ua === undefined) chapterStats[key].skipped++;
+                            else if (ua !== q.a) chapterStats[key].wrong++;
+                          });
+                          const weakChapters = Object.entries(chapterStats)
+                            .filter(([, s]) => (s.wrong + s.skipped) >= 1 && s.total >= 2)
+                            .map(([ch, s]) => ({ ch, missed: s.wrong + s.skipped, total: s.total, pct: Math.round((s.wrong + s.skipped) / s.total * 100) }))
+                            .sort((a, b) => b.pct - a.pct || b.missed - a.missed)
+                            .slice(0, 3);
+
+                          // "What this means" guidance based on score
+                          let guidance = "";
+                          if (latest.pct >= 50) guidance = "You've cleared the aggregate pass mark. Keep reinforcing weak chapters below to build a safety margin.";
+                          else if (latest.pct >= 40) guidance = "You've cleared the per-paper minimum but are short of the 50% aggregate needed to pass. Focus on the chapters highlighted below and retake soon.";
+                          else guidance = "Below the 40% per-paper minimum. Don't worry, this is a practice test. Study the explanations below for every wrong answer, then retake. This is exactly how students move from failing to passing.";
+
+                          // Which questions to display based on filter
+                          const displayIdx = filterWrongOnly ? [...wrongIdx, ...skippedIdx] : [...wrongIdx, ...skippedIdx, ...correctIdx];
+
+                          // Helper to render a single question card
+                          const renderQ = (i) => {
+                            const q = testQs[i];
+                            const userAns = answers[i];
+                            const correct = userAns === q.a;
+                            const attempted = userAns !== undefined;
+                            const shouldAutoExpand = !correct; // wrong OR skipped auto-expands
+                            const isExpanded = showExplanation[i] !== undefined ? showExplanation[i] : shouldAutoExpand;
+                            const cardTint = correct ? "#065F4620" : attempted ? "#7F1D1D20" : "#78350F20";
+                            return (
+                              <div key={i} className="card" style={{ marginBottom: 10, borderColor: cardTint }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
+                                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                                    <span className="tag" style={{ background: correct ? "#064E3B" : attempted ? "#450A0A" : "#78350F", color: correct ? "#6EE7B7" : attempted ? "#FCA5A5" : "#FCD34D" }}>
+                                      Q{i + 1} {correct ? "✓ Correct" : attempted ? "✗ Wrong" : "— Skipped"}
+                                    </span>
+                                    <span className="tag" style={{ background: "#1F2937", color: "#9CA3AF", fontSize: 10 }}>{q.chapter}</span>
+                                  </div>
+                                  <span className="tag" style={{ background: "#1F2937", color: "#6B7280" }}>{q.marks}m | {q.diff}</span>
+                                </div>
+                                <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 10, color: "#CBD5E1" }}>{q.q}</p>
+                                <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 8 }}>
+                                  {q.opts.map((o, oi) => (
+                                    <div key={oi} className={`opt ${oi === q.a ? 'correct' : userAns === oi ? 'wrong' : ''}`} style={{ cursor: "default", padding: "10px 14px" }}>
+                                      <span style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid currentColor", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, flexShrink: 0 }}>{String.fromCharCode(65 + oi)}</span>
+                                      <span style={{ flex: 1, fontSize: 13 }}>{o}</span>
+                                      {oi === q.a && <span>✓</span>}
+                                      {userAns === oi && oi !== q.a && <span>✗</span>}
+                                    </div>
+                                  ))}
+                                </div>
+                                <button className="btn btn-s" style={{ fontSize: 11, padding: "6px 14px" }}
+                                  onClick={() => setShowExplanation(s => ({ ...s, [i]: !(s[i] !== undefined ? s[i] : shouldAutoExpand) }))}>
+                                  {isExpanded ? "Hide" : "Show"} Explanation
+                                </button>
+                                {isExpanded && (
+                                  <div style={{ marginTop: 10, padding: "14px 16px", background: "#0F172A", borderRadius: 10, fontSize: 13, lineHeight: 1.7, color: "#94A3B8", borderLeft: `3px solid ${correct ? "#10B981" : attempted ? "#EF4444" : "#F59E0B"}` }}>
+                                    <div style={{ fontSize: 11, fontWeight: 700, color: correct ? "#6EE7B7" : attempted ? "#FCA5A5" : "#FCD34D", marginBottom: 6, letterSpacing: 0.5 }}>
+                                      {correct ? "REINFORCE THE CONCEPT" : attempted ? "LET'S UNDERSTAND WHY" : "KEY INSIGHT YOU MISSED"}
+                                    </div>
+                                    {q.exp}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          };
+
                           return (
                             <div>
-                              <div className="card" style={{ textAlign: "center", padding: 32, marginBottom: 24, background: latest.pct >= 50 ? "linear-gradient(135deg,#064E3B,#111827)" : latest.pct >= 40 ? "linear-gradient(135deg,#422006,#111827)" : "linear-gradient(135deg,#450A0A,#111827)" }}>
+                              {/* Score Card */}
+                              <div className="card" style={{ textAlign: "center", padding: 32, marginBottom: 16, background: latest.pct >= 50 ? "linear-gradient(135deg,#064E3B,#111827)" : latest.pct >= 40 ? "linear-gradient(135deg,#422006,#111827)" : "linear-gradient(135deg,#450A0A,#111827)" }}>
                                 <div style={{ fontSize: 48, marginBottom: 8 }}>{latest.pct >= 50 ? "🏆" : latest.pct >= 40 ? "📝" : "📖"}</div>
                                 <div style={{ fontSize: 36, fontWeight: 900, color: latest.pct >= 50 ? "#10B981" : latest.pct >= 40 ? "#F59E0B" : "#EF4444" }}>{latest.pct}%</div>
                                 <div style={{ fontSize: 14, color: "#9CA3AF", marginTop: 4 }}>{latest.score}/{latest.total} marks | {Math.round(latest.timeTaken / 60)} minutes</div>
-                                <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, fontSize: 13 }}>
+                                <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, fontSize: 13, flexWrap: "wrap" }}>
                                   <span style={{ color: "#10B981" }}>✓ {latest.correct} correct</span>
                                   <span style={{ color: "#EF4444" }}>✗ {latest.wrong} wrong</span>
-                                  <span style={{ color: "#6B7280" }}>— {latest.unanswered} skipped</span>
+                                  <span style={{ color: "#F59E0B" }}>— {latest.unanswered} skipped</span>
                                 </div>
                                 <div style={{ marginTop: 8, fontSize: 12, color: latest.pct >= 40 ? "#6EE7B7" : "#FCA5A5" }}>
                                   {latest.pct >= 50 ? "PASS (50%+ aggregate)" : latest.pct >= 40 ? "BORDERLINE (40% per paper, need 50% aggregate)" : "BELOW PASSING (need 40% minimum)"}
                                 </div>
                               </div>
-                              {/* Question review */}
-                              <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, color: "#9CA3AF" }}>Review Answers</h2>
-                              {testQs.map((q, i) => {
-                                const userAns = answers[i];
-                                const correct = userAns === q.a;
-                                const attempted = userAns !== undefined;
-                                return (
-                                  <div key={i} className="card" style={{ marginBottom: 10, borderColor: correct ? "#065F4620" : attempted ? "#7F1D1D20" : "#1F2937" }}>
-                                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                                      <span className="tag" style={{ background: correct ? "#064E3B" : attempted ? "#450A0A" : "#1F2937", color: correct ? "#6EE7B7" : attempted ? "#FCA5A5" : "#6B7280" }}>
-                                        Q{i + 1} {correct ? "✓ Correct" : attempted ? "✗ Wrong" : "— Skipped"}
-                                      </span>
-                                      <span className="tag" style={{ background: "#1F2937", color: "#6B7280" }}>{q.marks}m | {q.diff}</span>
+
+                              {/* What this means */}
+                              <div className="card" style={{ padding: "14px 18px", marginBottom: 16, background: "#111827", borderLeft: "3px solid #6366F1" }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: "#A78BFA", marginBottom: 6, letterSpacing: 0.5 }}>WHAT THIS MEANS</div>
+                                <p style={{ fontSize: 13, lineHeight: 1.7, color: "#CBD5E1", margin: 0 }}>{guidance}</p>
+                              </div>
+
+                              {/* Chapter Weakness Summary */}
+                              {weakChapters.length > 0 && (
+                                <div className="card" style={{ padding: "14px 18px", marginBottom: 16, background: "#111827", borderLeft: "3px solid #F59E0B" }}>
+                                  <div style={{ fontSize: 11, fontWeight: 700, color: "#FCD34D", marginBottom: 10, letterSpacing: 0.5 }}>FOCUS ON THESE CHAPTERS</div>
+                                  {weakChapters.map((w, wi) => (
+                                    <div key={wi} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: wi < weakChapters.length - 1 ? "1px solid #1F2937" : "none" }}>
+                                      <span style={{ fontSize: 13, color: "#CBD5E1" }}>{w.ch}</span>
+                                      <span style={{ fontSize: 12, color: "#FCA5A5", fontWeight: 600 }}>{w.missed}/{w.total} missed ({w.pct}%)</span>
                                     </div>
-                                    <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 10, color: "#CBD5E1" }}>{q.q}</p>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 8 }}>
-                                      {q.opts.map((o, oi) => (
-                                        <div key={oi} className={`opt ${oi === q.a ? 'correct' : userAns === oi ? 'wrong' : ''}`} style={{ cursor: "default", padding: "10px 14px" }}>
-                                          <span style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid currentColor", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, flexShrink: 0 }}>{String.fromCharCode(65 + oi)}</span>
-                                          <span style={{ flex: 1, fontSize: 13 }}>{o}</span>
-                                          {oi === q.a && <span>✓</span>}
-                                          {userAns === oi && oi !== q.a && <span>✗</span>}
-                                        </div>
-                                      ))}
-                                    </div>
-                                    <button className="btn btn-s" style={{ fontSize: 11, padding: "6px 14px" }}
-                                      onClick={() => setShowExplanation(s => ({ ...s, [i]: !s[i] }))}>
-                                      {showExplanation[i] ? "Hide" : "Show"} Explanation
-                                    </button>
-                                    {showExplanation[i] && (
-                                      <div style={{ marginTop: 10, padding: "14px 16px", background: "#0F172A", borderRadius: 10, fontSize: 13, lineHeight: 1.7, color: "#94A3B8", borderLeft: "3px solid #6366F1" }}>
-                                        {q.exp}
-                                      </div>
-                                    )}
+                                  ))}
+                                  <p style={{ fontSize: 11, color: "#6B7280", marginTop: 10, marginBottom: 0, fontStyle: "italic" }}>Revise these chapters before retaking. You'll see the biggest score jump here.</p>
+                                </div>
+                              )}
+
+                              {/* Review Section Header + Filter */}
+                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, marginTop: 24, flexWrap: "wrap", gap: 8 }}>
+                                <h2 style={{ fontSize: 16, fontWeight: 700, color: "#E5E7EB", margin: 0 }}>Review Answers {filterWrongOnly && <span style={{ color: "#F59E0B", fontSize: 12, marginLeft: 8 }}>(showing mistakes only)</span>}</h2>
+                                {(wrongIdx.length + skippedIdx.length) > 0 && (
+                                  <button
+                                    className="btn btn-s"
+                                    style={{ fontSize: 11, padding: "6px 12px", background: filterWrongOnly ? "#6366F1" : "#1F2937", color: filterWrongOnly ? "#FFFFFF" : "#9CA3AF" }}
+                                    onClick={() => setFilterWrongOnly(f => !f)}
+                                  >
+                                    {filterWrongOnly ? `Show All (${testQs.length})` : `Show Mistakes Only (${wrongIdx.length + skippedIdx.length})`}
+                                  </button>
+                                )}
+                              </div>
+
+                              {/* Wrong Section */}
+                              {wrongIdx.length > 0 && displayIdx.some(i => wrongIdx.includes(i)) && (
+                                <>
+                                  <div style={{ fontSize: 12, fontWeight: 700, color: "#FCA5A5", margin: "10px 0 8px", letterSpacing: 0.5 }}>
+                                    ✗ QUESTIONS YOU GOT WRONG ({wrongIdx.length})
                                   </div>
-                                );
-                              })}
-                              <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+                                  {wrongIdx.map(i => renderQ(i))}
+                                </>
+                              )}
+
+                              {/* Skipped Section */}
+                              {skippedIdx.length > 0 && displayIdx.some(i => skippedIdx.includes(i)) && (
+                                <>
+                                  <div style={{ fontSize: 12, fontWeight: 700, color: "#FCD34D", margin: "20px 0 8px", letterSpacing: 0.5 }}>
+                                    — QUESTIONS YOU SKIPPED ({skippedIdx.length})
+                                  </div>
+                                  {skippedIdx.map(i => renderQ(i))}
+                                </>
+                              )}
+
+                              {/* Correct Section */}
+                              {!filterWrongOnly && correctIdx.length > 0 && (
+                                <>
+                                  <div style={{ fontSize: 12, fontWeight: 700, color: "#6EE7B7", margin: "20px 0 8px", letterSpacing: 0.5 }}>
+                                    ✓ QUESTIONS YOU GOT RIGHT ({correctIdx.length})
+                                  </div>
+                                  {correctIdx.map(i => renderQ(i))}
+                                </>
+                              )}
+
+                              {/* Empty state for "mistakes only" when there are no mistakes */}
+                              {filterWrongOnly && (wrongIdx.length + skippedIdx.length) === 0 && (
+                                <div className="card" style={{ textAlign: "center", padding: 32, color: "#9CA3AF" }}>
+                                  <div style={{ fontSize: 32, marginBottom: 8 }}>🎯</div>
+                                  <p style={{ fontSize: 14 }}>No mistakes to review. Perfect score!</p>
+                                </div>
+                              )}
+
+                              <div style={{ display: "flex", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
                                 <button className="btn btn-p" onClick={() => setScreen("dashboard")}>Back to Dashboard</button>
-                                <button className="btn btn-s" onClick={() => { setSubmitted(false); setAnswers({}); setCurrentQ(0); setShowExplanation({}); setTimer(testQs.length * 120); setTimerActive(true); }}>Retry Same Test</button>
+                                <button className="btn btn-s" onClick={() => { setSubmitted(false); setAnswers({}); setCurrentQ(0); setShowExplanation({}); setFilterWrongOnly(false); setTimer(testQs.length * 120); setTimerActive(true); }}>Retry Same Test</button>
                               </div>
                             </div>
                           );
