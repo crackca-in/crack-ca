@@ -2002,7 +2002,7 @@ export default function CAPrepPro() {
             <rect x="178" y="520" width="324" height="3" rx="1.5" fill="url(#landingAccent)" opacity="0.5"/>
           </svg>
           <p style={{ fontSize: 24, fontWeight: 600, color: "#E5E7EB", textAlign: "center", maxWidth: 560, marginBottom: 12, lineHeight: 1.4 }}>The smartest way to crack CA Foundation.</p>
-          <p style={{ fontSize: 17, fontWeight: 400, color: "#9CA3AF", textAlign: "center", maxWidth: 520, marginBottom: 32, lineHeight: 1.6 }}>400+ exam-pattern questions with detailed explanations, real-time analytics, and timed mock tests.</p>
+          <p style={{ fontSize: 17, fontWeight: 400, color: "#9CA3AF", textAlign: "center", maxWidth: 620, marginBottom: 32, lineHeight: 1.6 }}>400+ exam-pattern questions with detailed explanations,<br />real-time analytics, and timed mock tests.</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", marginBottom: 40 }}>
             {["4 Papers Covered", "Exam-Pattern MCQs", "Detailed Explanations", "Performance Analytics", "Negative Marking", "Timed Mock Tests"].map((f, i) => (
               <span key={i} className="tag" style={{ background: "#1E1B4B", color: "#A78BFA", fontSize: 12, padding: "6px 14px" }}>{f}</span>
