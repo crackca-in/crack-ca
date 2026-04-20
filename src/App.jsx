@@ -2158,7 +2158,7 @@ export default function CAPrepPro() {
                                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                                   <span style={{ fontSize: 18 }}>{p?.icon}</span>
                                   <div>
-                                    <div style={{ fontWeight: 600, fontSize: 13 }}>{p?.name} {h.chapter ? ` , ${ALL_CHAPTERS.find(c=>c.id===h.chapter)?.name?.slice(0,30)}` : ' , Full Mock'}</div>
+                                    <div style={{ fontWeight: 600, fontSize: 13 }}>{p?.name} {h.mode === 'mock' ? ', Full Mock' : h.chapter ? `, ${h.chapter.length > 30 ? h.chapter.slice(0, 30) + '…' : h.chapter}` : ''}</div>
                                     <div style={{ fontSize: 11, color: "#4B5563" }}>{new Date(h.date).toLocaleDateString()} | {Math.round(h.timeTaken/60)} min</div>
                                   </div>
                                 </div>
