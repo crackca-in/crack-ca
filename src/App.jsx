@@ -10,7 +10,7 @@ const APP_CONFIG = {
   totalPapers: 4,
   totalMarks: 400,
   plans: [
-    { id: "free", name: "Free", price: 0, label: "₹0", features: ["Paper 1 Ch.1-3 only", "10 MCQs per chapter", "No analytics"], color: "#6B7280" },
+    { id: "free", name: "Free", price: 0, label: "₹0", features: ["P1 Chapters 1-3 (full access)", "P2/P3/P4: 2 chapters each (full access)", "12-Question Sampler (2 attempts)", "273 free questions across all 4 papers", "Detailed explanations on every question"], color: "#6B7280" },
     { id: "foundation", name: "Foundation Pass", price: 999, label: "₹999", badge: "POPULAR", features: ["All 4 papers", "Full question bank", "Performance analytics", "Chapter-wise tests", "Full mock exams"], color: "#4F46E5" },
     { id: "mentor", name: "Foundation + Mentor", price: 2499, label: "₹2,499", features: ["Everything in Foundation Pass", "Study planner", "Weak area deep-dive", "Spaced repetition", "Priority updates"], color: "#7C3AED" },
     { id: "bundle", name: "All Levels Bundle", price: 4999, label: "₹4,999/yr", features: ["Foundation + Inter + Final", "Lifetime content updates", "Early access to new papers"], color: "#EC4899" },
@@ -54,8 +54,8 @@ const PAPERS = [
     id: "P2", name: "Paper 2", fullName: "Business Laws",
     marks: 100, duration: 180, type: "Subjective", negative: false, color: "#DC2626", icon: "⚖️",
     chapters: [
-      { id: "Indian Regulatory Framework", wt: "5-10", free: false },
-      { id: "The Indian Contract Act, 1872", wt: "25-30", free: false },
+      { id: "Indian Regulatory Framework", wt: "5-10", free: true },
+      { id: "The Indian Contract Act, 1872", wt: "25-30", free: true },
       { id: "The Sale of Goods Act, 1930", wt: "15-20", free: false },
       { id: "The Indian Partnership Act, 1932", wt: "15-20", free: false },
       { id: "The Limited Liability Partnership Act, 2008", wt: "5-10", free: false },
@@ -70,7 +70,7 @@ const PAPERS = [
       { id: "Ratio, Proportion, Indices and Logarithms", wt: "6-9", free: false },
       { id: "Equations", wt: "6-9", free: false },
       { id: "Linear Inequalities", wt: "3-5", free: false },
-      { id: "Mathematics of Finance", wt: "12-15", free: false },
+      { id: "Mathematics of Finance", wt: "12-15", free: true },
       { id: "Permutations and Combinations", wt: "6-8", free: false },
       { id: "Sequence and Series", wt: "6-8", free: false },
       { id: "Sets, Relations and Functions", wt: "3-5", free: false },
@@ -81,7 +81,7 @@ const PAPERS = [
       { id: "Blood Relations", wt: "3-5", free: false },
       { id: "Statistical Description of Data", wt: "4-6", free: false },
       { id: "Measures of Central Tendency and Dispersion", wt: "10-13", free: false },
-      { id: "Probability", wt: "6-8", free: false },
+      { id: "Probability", wt: "6-8", free: true },
       { id: "Theoretical Distributions", wt: "4-6", free: false },
       { id: "Correlation and Regression", wt: "8-10", free: false },
       { id: "Index Numbers", wt: "4-6", free: false },
@@ -91,8 +91,8 @@ const PAPERS = [
     id: "P4", name: "Paper 4", fullName: "Business Economics",
     marks: 100, duration: 120, type: "Objective (MCQ)", negative: true, color: "#7C3AED", icon: "📈",
     chapters: [
-      { id: "Nature and Scope of Business Economics", wt: "5-10", free: false },
-      { id: "Theory of Demand and Supply", wt: "15-20", free: false },
+      { id: "Nature and Scope of Business Economics", wt: "5-10", free: true },
+      { id: "Theory of Demand and Supply", wt: "15-20", free: true },
       { id: "Theory of Production and Cost", wt: "12-15", free: false },
       { id: "Price Determination in Different Markets", wt: "12-15", free: false },
       { id: "Business Cycles", wt: "5-10", free: false },
@@ -4490,9 +4490,11 @@ export default function CAPrepPro() {
 
   // Start test
   const startTest = (mode, paperId, chapterId) => {
+    // Free-tier guard: full mocks are PRO-only
+    if (plan === "free" && mode === "mock") { setScreen("plans"); return; }
     let qs = QUESTIONS.filter(q => q.paper === paperId);
     if (chapterId) qs = qs.filter(q => q.chapter === chapterId || q.chapter.startsWith(chapterId.split(" (")[0].split(",")[0]));
-    // Check free access
+    // Free-tier guard: chapter must be flagged free
     if (plan === "free") {
       const ch = ALL_CHAPTERS.find(c => c.id === chapterId);
       if (ch && !ch.free) { setScreen("plans"); return; }
@@ -4512,6 +4514,38 @@ export default function CAPrepPro() {
     setScreen("test");
   };
 
+  // Sampler: 12 random MCQs (3 per paper) from FREE chapters across all papers.
+  // Free users get 2 lifetime attempts. 30 minute timer. No negative marking on sampler regardless of paper.
+  const SAMPLER_MAX_ATTEMPTS = 2;
+  const startSampler = () => {
+    // Attempt-cap check
+    let attempts = 0;
+    try { attempts = parseInt(localStorage.getItem("crackca_sampler_attempts") || "0", 10) || 0; } catch {}
+    if (plan === "free" && attempts >= SAMPLER_MAX_ATTEMPTS) { setScreen("plans"); return; }
+    // Build the pool: MCQ-only, free chapters only, all 4 papers, 3 per paper
+    const freeChapterIds = new Set(ALL_CHAPTERS.filter(c => c.free).map(c => c.id));
+    let picked = [];
+    PAPERS.forEach(p => {
+      const pool = QUESTIONS.filter(q => q.paper === p.id && q.type === "MCQ" && freeChapterIds.has(q.chapter));
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      picked = picked.concat(shuffled.slice(0, 3));
+    });
+    if (picked.length === 0) { alert("Sampler pool is empty. Please contact support."); return; }
+    // Increment attempts (only counts for free users; paid users can sample without limit)
+    if (plan === "free") {
+      try { localStorage.setItem("crackca_sampler_attempts", String(attempts + 1)); } catch {}
+    }
+    setTestQs(picked);
+    setAnswers({});
+    setSubmitted(false);
+    setCurrentQ(0);
+    setShowExplanation({});
+    setTestMode("sampler");
+    setTimer(30 * 60); // 30 minutes
+    setTimerActive(true);
+    setScreen("test");
+  };
+
   // Submit test
   const submitTest = () => {
     clearInterval(timerRef.current);
@@ -4527,9 +4561,10 @@ export default function CAPrepPro() {
       }
     });
     const totalMarks = testQs.reduce((s, q) => s + q.marks, 0);
+    const applyNegative = paper?.negative && testMode !== "sampler";
     const earned = testQs.reduce((s, q, i) => {
       if (answers[i] === q.a) return s + q.marks;
-      if (answers[i] !== undefined && paper?.negative) return s - (q.marks * 0.25);
+      if (answers[i] !== undefined && applyNegative) return s - (q.marks * 0.25);
       return s;
     }, 0);
     const pct = Math.round((Math.max(0, earned) / totalMarks) * 100);
@@ -4685,14 +4720,14 @@ export default function CAPrepPro() {
             <rect x="178" y="520" width="324" height="3" rx="1.5" fill="url(#landingAccent)" opacity="0.5"/>
           </svg>
           <p style={{ fontSize: 24, fontWeight: 600, color: "#E5E7EB", textAlign: "center", maxWidth: 560, marginBottom: 12, lineHeight: 1.4 }}>The smartest way to crack CA Foundation.</p>
-          <p style={{ fontSize: 17, fontWeight: 400, color: "#9CA3AF", textAlign: "center", maxWidth: 620, marginBottom: 32, lineHeight: 1.6 }}>400+ exam-pattern questions with detailed explanations,<br />real-time analytics, and timed mock tests.</p>
+          <p style={{ fontSize: 17, fontWeight: 400, color: "#9CA3AF", textAlign: "center", maxWidth: 620, marginBottom: 32, lineHeight: 1.6 }}>1,078 exam-pattern questions with detailed explanations,<br />real-time analytics, and timed mock tests.</p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center", marginBottom: 40 }}>
             {["4 Papers Covered", "Exam-Pattern MCQs", "Detailed Explanations", "Performance Analytics", "Negative Marking", "Timed Mock Tests"].map((f, i) => (
               <span key={i} className="tag" style={{ background: "#1E1B4B", color: "#A78BFA", fontSize: 12, padding: "6px 14px" }}>{f}</span>
             ))}
           </div>
           <button className="btn btn-p" style={{ fontSize: 16, padding: "16px 40px" }} onClick={() => setScreen("login")}>Start Free Practice →</button>
-          <p style={{ marginTop: 16, fontSize: 13, color: "#4B5563" }}>No credit card required. Free tier includes Paper 1 Chapters 1-3.</p>
+          <p style={{ marginTop: 16, fontSize: 13, color: "#4B5563" }}>No credit card required. Free tier: 273 questions across 9 chapters plus a 12-question 4-Paper Sampler.</p>
           <div style={{ marginTop: 48, display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
             {PAPERS.map(p => (
               <div key={p.id} style={{ textAlign: "center" }}>
@@ -4766,7 +4801,7 @@ export default function CAPrepPro() {
                   <span style={{ fontSize: 13, color: "#6B7280" }}>
                     {screen === "dashboard" && "Dashboard"}
                     {screen === "paper" && PAPERS.find(p=>p.id===selPaper)?.fullName}
-                    {screen === "test" && `${testMode === "mock" ? "Mock Exam" : "Chapter Test"} ${submitted ? "(Completed)" : ""}`}
+                    {screen === "test" && `${testMode === "mock" ? "Mock Exam" : testMode === "sampler" ? "4-Paper Sampler" : "Chapter Test"} ${submitted ? "(Completed)" : ""}`}
                     {screen === "analytics" && "Performance Analytics"}
                     {screen === "plans" && "Subscription Plans"}
                   </span>
@@ -4831,6 +4866,38 @@ export default function CAPrepPro() {
                           );
                         })}
                       </div>
+
+                      {/* ═══ 4-PAPER SAMPLER CARD ═══ */}
+                      {(() => {
+                        let attempts = 0;
+                        try { attempts = parseInt(localStorage.getItem("crackca_sampler_attempts") || "0", 10) || 0; } catch {}
+                        const remaining = Math.max(0, SAMPLER_MAX_ATTEMPTS - attempts);
+                        const exhausted = plan === "free" && remaining === 0;
+                        return (
+                          <div className="card" style={{ padding: 20, marginBottom: 28, background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)", border: "1px solid #4338CA" }}>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+                              <div style={{ flex: 1, minWidth: 240 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                                  <span style={{ fontSize: 22 }}>🎯</span>
+                                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#E0E7FF" }}>4-Paper Sampler</h3>
+                                  <span className="tag" style={{ background: "#4338CA", color: "#E0E7FF", fontSize: 10 }}>FREE</span>
+                                </div>
+                                <p style={{ fontSize: 13, color: "#C7D2FE", marginBottom: 4 }}>12 questions, 3 from each paper. 30-minute timer. No negative marking. Pulled fresh from free chapters every attempt.</p>
+                                {plan === "free" && (
+                                  <p style={{ fontSize: 11, color: exhausted ? "#FCA5A5" : "#A5B4FC", marginTop: 4 }}>
+                                    {exhausted ? "Sampler attempts exhausted. Upgrade to continue." : `${remaining} of ${SAMPLER_MAX_ATTEMPTS} attempts remaining`}
+                                  </p>
+                                )}
+                              </div>
+                              <button className="btn btn-p" style={{ padding: "12px 22px" }}
+                                onClick={() => exhausted ? setScreen("plans") : startSampler()}>
+                                {exhausted ? "Upgrade →" : "Start Sampler →"}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })()}
+
                       {history.length > 0 && (
                         <>
                           <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, color: "#9CA3AF" }}>Recent Activity</h2>
@@ -4841,7 +4908,7 @@ export default function CAPrepPro() {
                                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                                   <span style={{ fontSize: 18 }}>{p?.icon}</span>
                                   <div>
-                                    <div style={{ fontWeight: 600, fontSize: 13 }}>{p?.name} {h.chapter ? ` , ${ALL_CHAPTERS.find(c=>c.id===h.chapter)?.name?.slice(0,30)}` : ' , Full Mock'}</div>
+                                    <div style={{ fontWeight: 600, fontSize: 13 }}>{h.mode === "sampler" ? "4-Paper Sampler" : `${p?.name || ''}${h.chapter ? ` , ${(ALL_CHAPTERS.find(c=>c.id===h.chapter)?.id || '').slice(0,30)}` : ' , Full Mock'}`}</div>
                                     <div style={{ fontSize: 11, color: "#4B5563" }}>{new Date(h.date).toLocaleDateString()} | {Math.round(h.timeTaken/60)} min</div>
                                   </div>
                                 </div>
@@ -5147,7 +5214,7 @@ export default function CAPrepPro() {
 
                               <div style={{ display: "flex", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
                                 <button className="btn btn-p" onClick={() => setScreen("dashboard")}>Back to Dashboard</button>
-                                <button className="btn btn-s" onClick={() => { setSubmitted(false); setAnswers({}); setCurrentQ(0); setShowExplanation({}); setFilterWrongOnly(false); setTimer(testQs.length * 120); setTimerActive(true); }}>Retry Same Test</button>
+                                <button className="btn btn-s" onClick={() => { setSubmitted(false); setAnswers({}); setCurrentQ(0); setShowExplanation({}); setFilterWrongOnly(false); setTimer(testMode === "sampler" ? 30 * 60 : testQs.length * 120); setTimerActive(true); }}>Retry Same Test</button>
                               </div>
                             </div>
                           );
@@ -5198,7 +5265,7 @@ export default function CAPrepPro() {
                                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                   <span>{p?.icon}</span>
                                   <div>
-                                    <div style={{ fontSize: 13, fontWeight: 600 }}>{h.mode === "mock" ? "Mock Exam" : "Chapter Test"}</div>
+                                    <div style={{ fontSize: 13, fontWeight: 600 }}>{h.mode === "mock" ? "Mock Exam" : h.mode === "sampler" ? "4-Paper Sampler" : "Chapter Test"}</div>
                                     <div style={{ fontSize: 11, color: "#4B5563" }}>{new Date(h.date).toLocaleDateString()} | ✓{h.correct} ✗{h.wrong} —{h.unanswered}</div>
                                   </div>
                                 </div>
