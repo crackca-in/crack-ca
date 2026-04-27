@@ -4568,7 +4568,7 @@ export default function CAPrepPro() {
       return s;
     }, 0);
     const pct = Math.round((Math.max(0, earned) / totalMarks) * 100);
-    const elapsed = (testMode === "mock" ? (paper?.duration || 180) * 60 : testQs.length * 120) - timer;
+    const elapsed = (testMode === "mock" ? (paper?.duration || 180) * 60 : testMode === "sampler" ? 30 * 60 : testQs.length * 120) - timer;
     setHistory(h => [{ date: new Date().toISOString(), paper: testQs[0]?.paper, chapter: testQs[0]?.chapter, score: Math.max(0, earned), total: totalMarks, pct, correct, attempted, wrong, unanswered: testQs.length - attempted, timeTaken: elapsed, mode: testMode }, ...h]);
   };
 
