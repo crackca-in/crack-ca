@@ -4455,7 +4455,7 @@ export default function CAPrepPro() {
   useEffect(() => { try { localStorage.setItem("crackca_history", JSON.stringify(history)); } catch {} }, [history]);
 
   // Auto-login from localStorage
-  useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, []);
+  useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, [user]);
 
     // Supabase auth session: real source of truth for who is logged in
   useEffect(() => {
