@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { supabase } from "./supabaseClient";
 
 const APP_CONFIG = {
   name: "Crack CA",
@@ -4456,6 +4457,29 @@ export default function CAPrepPro() {
   // Auto-login from localStorage
   useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, []);
 
+    // Supabase auth session: real source of truth for who is logged in
+  useEffect(() => {
+    const mapUser = (session) => {
+      if (!session || !session.user) return null;
+      const su = session.user;
+      const meta = su.user_metadata || {};
+      const fallbackName = su.email ? su.email.split("@")[0] : "Student";
+      return {
+        id: su.id,
+        name: meta.full_name || meta.name || fallbackName,
+        email: su.email || "",
+        joined: su.created_at || new Date().toISOString(),
+      };
+    };
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(mapUser(data.session));
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(mapUser(session));
+    });
+    return () => { sub.subscription.unsubscribe(); };
+  }, []);
+
   // Timer
   useEffect(() => {
     if (timerActive && timer > 0) {
@@ -4590,11 +4614,18 @@ export default function CAPrepPro() {
   };
 
   // Quick login
-  const doLogin = () => {
-    if (!loginForm.name.trim() || !loginForm.email.trim()) return;
-    setUser({ name: loginForm.name.trim(), email: loginForm.email.trim(), plan: "free", joined: new Date().toISOString() });
+  const doLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
+  };
+
+  const doLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
     setPlan("free");
-    setScreen("dashboard");
+    setScreen("landing");
   };
 
   const upgradePlan = async (planId) => {
@@ -4773,6 +4804,7 @@ export default function CAPrepPro() {
                 <div style={{ fontSize: 18, fontWeight: 800, background: "linear-gradient(135deg,#A78BFA,#6366F1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Crack CA</div>
                 <div style={{ fontSize: 11, color: "#4B5563", marginTop: 2 }}>{user.name} | {plan === "free" ? "Free Plan" : APP_CONFIG.plans.find(p=>p.id===plan)?.name}</div>
                 {plan === "free" && <button className="btn btn-p" style={{ width: "100%", marginTop: 10, fontSize: 11, padding: "8px" }} onClick={() => {setScreen("plans");setSideOpen(false);}}>Upgrade →</button>}
+                <button className="btn" style={{ width: "100%", marginTop: 8, fontSize: 11, padding: "8px" }} onClick={doLogout}>Sign out</button>
               </div>
               <div style={{ padding: "8px", flex: 1 }}>
                 <button className={`nav ${screen==='dashboard'?'act':''}`} onClick={() => {setScreen('dashboard');setSideOpen(false);}}>📊 Dashboard</button>
