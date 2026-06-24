@@ -4784,10 +4784,8 @@ export default function CAPrepPro() {
               </g>
             </svg>
             <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Welcome to Crack CA</h2>
-            <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>Enter your details to start practicing</p>
-            <input className="inp" placeholder="Your name" value={loginForm.name} onChange={e => setLoginForm({...loginForm, name: e.target.value})} style={{ marginBottom: 12 }} />
-            <input className="inp" placeholder="Email address" type="email" value={loginForm.email} onChange={e => setLoginForm({...loginForm, email: e.target.value})} style={{ marginBottom: 20 }} />
-            <button className="btn btn-p" style={{ width: "100%" }} onClick={doLogin} disabled={!loginForm.name.trim() || !loginForm.email.trim()}>Start Practicing →</button>
+            <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>Sign in with your Google account to start practicing</p>
+              <button className="btn btn-p" style={{ width: "100%" }} onClick={doLogin}>Sign in with Google</button>
             <p style={{ fontSize: 11, color: "#4B5563", textAlign: "center", marginTop: 12 }}>By continuing you agree to our Terms of Service</p>
           </div>
         </div>
