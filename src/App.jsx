@@ -4539,37 +4539,34 @@ export default function CAPrepPro() {
   };
 
   // Sampler: 12 random MCQs (3 per paper) from FREE chapters across all papers.
-  // Free users get 2 lifetime attempts. 30 minute timer. No negative marking on sampler regardless of paper.
-  const SAMPLER_MAX_ATTEMPTS = 2;
-  const startSampler = () => {
-    // Attempt-cap check
-    let attempts = 0;
-    try { attempts = parseInt(localStorage.getItem("crackca_sampler_attempts") || "0", 10) || 0; } catch {}
-    if (plan === "free" && attempts >= SAMPLER_MAX_ATTEMPTS) { setScreen("plans"); return; }
-    // Build the pool: MCQ-only, free chapters only, all 4 papers, 3 per paper
-    const freeChapterIds = new Set(ALL_CHAPTERS.filter(c => c.free).map(c => c.id));
-    let picked = [];
-    PAPERS.forEach(p => {
-      const pool = QUESTIONS.filter(q => q.paper === p.id && q.type === "MCQ" && freeChapterIds.has(q.chapter));
-      const shuffled = [...pool].sort(() => Math.random() - 0.5);
-      picked = picked.concat(shuffled.slice(0, 3));
-    });
-    if (picked.length === 0) { alert("Sampler pool is empty. Please contact support."); return; }
-    // Increment attempts (only counts for free users; paid users can sample without limit)
-    if (plan === "free") {
-      try { localStorage.setItem("crackca_sampler_attempts", String(attempts + 1)); } catch {}
-    }
-    setTestQs(picked);
-    setAnswers({});
-    setSubmitted(false);
-    setCurrentQ(0);
-    setShowExplanation({});
-    setTestMode("sampler");
-    setTimer(30 * 60); // 30 minutes
-    setTimerActive(true);
-    setScreen("test");
-  };
+  // Free users get 3 completed attempts total (server-enforced across all test types). 30 minute timer. No negative marking on sampler regardless of paper.
+  const startSampler = async () => {
+// Call backend to get sampler questions
+  const { data: questions, error } = await supabase.functions.invoke('getTestQuestions', {
+    body: { mode: "sampler" },
+  });
 
+  if (error || !questions) {
+    alert("Failed to load sampler questions. Please try again.");
+    return;
+  }
+
+  if (questions.length === 0) {
+    alert("Sampler pool is empty. Please contact support.");
+    return;
+  }
+
+  const picked = questions;
+  setTestQs(picked);
+  setAnswers({});
+  setSubmitted(false);
+  setCurrentQ(0);
+  setShowExplanation({});
+  setTestMode("sampler");
+  setTimer(30 * 60); // 30 minutes
+  setTimerActive(true);
+  setScreen("test");
+};
   // Submit test
   const submitTest = () => {
     clearInterval(timerRef.current);
