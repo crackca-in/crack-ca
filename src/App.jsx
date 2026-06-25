@@ -4596,29 +4596,58 @@ export default function CAPrepPro() {
   setScreen("test");
 };
   // Submit test
-  const submitTest = () => {
+   const submitTest = async () => {
     clearInterval(timerRef.current);
     setTimerActive(false);
-    setSubmitted(true);
-    const paper = PAPERS.find(p => p.id === testQs[0]?.paper);
-    let correct = 0, attempted = 0, wrong = 0;
-    testQs.forEach((q, i) => {
-      if (answers[i] !== undefined) {
-        attempted++;
-        if (answers[i] === q.a) correct++;
-        else wrong++;
-      }
+    
+    // Build answers array for backend
+    const answersArray = testQs.map((q, i) => ({
+      question_code: q.code,
+      selected_index: answers[i] !== undefined ? answers[i] : null,
+    }));
+    
+    // Calculate elapsed time
+    const elapsed = (testMode === "mock" ? (PAPERS.find(p => p.id === testQs[0]?.paper)?.duration || 180) * 60 : testMode === "sampler" ? 30 * 60 : testQs.length * 120) - timer;
+    
+    // Call backend
+    const { data, error } = await supabase.functions.invoke('submitTest', {
+      body: {
+        testType: testMode,
+        paperId: testQs[0]?.paper,
+        chapterName: testQs[0]?.chapter || null,
+        answers: answersArray,
+        timeTakenSec: elapsed,
+      },
     });
-    const totalMarks = testQs.reduce((s, q) => s + q.marks, 0);
-    const applyNegative = paper?.negative && testMode !== "sampler";
-    const earned = testQs.reduce((s, q, i) => {
-      if (answers[i] === q.a) return s + q.marks;
-      if (answers[i] !== undefined && applyNegative) return s - (q.marks * 0.25);
-      return s;
-    }, 0);
-    const pct = Math.round((Math.max(0, earned) / totalMarks) * 100);
-    const elapsed = (testMode === "mock" ? (paper?.duration || 180) * 60 : testMode === "sampler" ? 30 * 60 : testQs.length * 120) - timer;
-    setHistory(h => [{ date: new Date().toISOString(), paper: testQs[0]?.paper, chapter: testQs[0]?.chapter, score: Math.max(0, earned), total: totalMarks, pct, correct, attempted, wrong, unanswered: testQs.length - attempted, timeTaken: elapsed, mode: testMode }, ...h]);
+    
+    if (error || data?.reason === "upgrade_required") {
+      alert("You have used all 3 free attempts. Upgrade to continue.");
+      setScreen("plans");
+      return;
+    }
+    
+    if (error || !data || !data.ok) {
+      alert("Failed to submit test. Please try again.");
+      return;
+    }
+    
+    // Save to history
+    setHistory(h => [{
+      date: new Date().toISOString(),
+      paper: testQs[0]?.paper,
+      chapter: testQs[0]?.chapter,
+      score: data.correct,
+      total: data.total,
+      pct: Math.round(data.scorePercent),
+      correct: data.correct,
+      attempted: answersArray.filter(a => a.selected_index !== null).length,
+      wrong: data.total - data.correct,
+      unanswered: testQs.length - answersArray.filter(a => a.selected_index !== null).length,
+      timeTaken: elapsed,
+      mode: testMode,
+    }, ...h]);
+    
+    setSubmitted(true);
   };
 
   // Analytics
