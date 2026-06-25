@@ -4513,19 +4513,33 @@ export default function CAPrepPro() {
   const formatTime = (s) => `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
 
   // Start test
-  const startTest = (mode, paperId, chapterId) => {
+// Start test
+  const startTest = async (mode, paperId, chapterId) => {
     // Free-tier guard: full mocks are PRO-only
     if (plan === "free" && mode === "mock") { setScreen("plans"); return; }
-    let qs = QUESTIONS.filter(q => q.paper === paperId);
-    if (chapterId) qs = qs.filter(q => q.chapter === chapterId || q.chapter.startsWith(chapterId.split(" (")[0].split(",")[0]));
-    // Free-tier guard: chapter must be flagged free
-    if (plan === "free") {
-      const ch = ALL_CHAPTERS.find(c => c.id === chapterId);
-      if (ch && !ch.free) { setScreen("plans"); return; }
+    
+    // Call backend to get questions
+    const { data, error } = await supabase.functions.invoke('getTestQuestions', {
+      body: { paperId, chapterName: chapterId || undefined },
+    });
+
+    if (error || data?.reason === "upgrade_required") {
+      alert("You have used all 3 free attempts. Upgrade to continue.");
+      setScreen("plans");
+      return;
     }
-    if (qs.length === 0) { alert("No questions available for this selection yet. Questions are being added."); return; }
-    // Shuffle
-    qs = [...qs].sort(() => Math.random() - 0.5);
+
+    if (error || !data || !data.questions) {
+      alert("Failed to load questions. Please try again.");
+      return;
+    }
+
+    if (data.questions.length === 0) {
+      alert("No questions available for this selection. Questions are being added.");
+      return;
+    }
+
+    const qs = data.questions;
     setTestQs(qs);
     setAnswers({});
     setSubmitted(false);
@@ -4542,22 +4556,36 @@ export default function CAPrepPro() {
   // Free users get 3 completed attempts total (server-enforced across all test types). 30 minute timer. No negative marking on sampler regardless of paper.
   const startSampler = async () => {
 // Call backend to get sampler questions
-  const { data: questions, error } = await supabase.functions.invoke('getTestQuestions', {
-    body: { mode: "sampler" },
-  });
+  const responses = await Promise.all([
+  supabase.functions.invoke('getTestQuestions', { body: { paperId: "P1", limit: 3 } }),
+  supabase.functions.invoke('getTestQuestions', { body: { paperId: "P2", limit: 3 } }),
+  supabase.functions.invoke('getTestQuestions', { body: { paperId: "P3", limit: 3 } }),
+  supabase.functions.invoke('getTestQuestions', { body: { paperId: "P4", limit: 3 } }),
+]);
 
-  if (error || !questions) {
-    alert("Failed to load sampler questions. Please try again.");
-    return;
+  // Extract and combine questions from all 4 responses
+  let allQuestions = [];
+  for (let i = 0; i < responses.length; i++) {
+    const { data, error } = responses[i];
+    if (error || data?.reason === "upgrade_required") {
+      alert("Failed to load sampler questions. Please upgrade to continue.");
+      return;
+    }
+    if (error || !data || !data.questions) {
+      alert("Failed to load sampler questions. Please try again.");
+      return;
+    }
+    allQuestions = allQuestions.concat(data.questions);
   }
 
-  if (questions.length === 0) {
+  if (allQuestions.length === 0) {
     alert("Sampler pool is empty. Please contact support.");
     return;
   }
 
-  const picked = questions;
-  setTestQs(picked);
+  const picked = allQuestions;
+
+   setTestQs(picked);
   setAnswers({});
   setSubmitted(false);
   setCurrentQ(0);
