@@ -158,7 +158,17 @@ export default function CAPrepPro() {
 
   // Auto-login from localStorage
   useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, [user]);
-
+// Block 5 gate: once profile loads, route phone-less users to verifyPhone.
+  // SOFT GATE during development. The verifyPhone screen has a temporary
+  // "Continue to dashboard" escape that MUST be removed before merge to main.
+  useEffect(() => {
+    if (!user) return;
+    if (!profile) return; // wait until profile has actually loaded
+    if (profile.phone === null && (screen === "landing" || screen === "dashboard")) {
+      setScreen("verifyPhone");
+    }
+  }, [user, profile, screen]);
+  
     // Supabase auth session: real source of truth for who is logged in
   useEffect(() => {
     const mapUser = (session) => {
