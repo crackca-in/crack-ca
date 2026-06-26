@@ -564,8 +564,26 @@ export default function CAPrepPro() {
         </div>
       )}
 
+      {/* ═══ VERIFY PHONE SCREEN (Block 5) ═══ */}
+      {screen === "verifyPhone" && (
+        <div className="fade" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+          <div className="card" style={{ maxWidth: 400, width: "100%", padding: 32 }}>
+            <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Verify your phone</h2>
+            <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>We need to verify a mobile number for your account.</p>
+
+            {/* TEMPORARY DIAGNOSTIC: shows what the gate detected. Remove before merge. */}
+            <div style={{ fontSize: 12, color: "#9CA3AF", textAlign: "center", marginBottom: 16, padding: 10, border: "1px dashed #374151", borderRadius: 8 }}>
+              Detected profile phone: <strong>{profile ? (profile.phone === null ? "NULL (needs verification)" : profile.phone) : "profile not loaded yet"}</strong>
+            </div>
+
+            {/* TEMPORARY TEST-ONLY ESCAPE (soft gate). MUST be removed before merge to main. */}
+            <button className="btn btn-p" style={{ width: "100%" }} onClick={() => setScreen("dashboard")}>Continue to dashboard (test only)</button>
+          </div>
+        </div>
+      )}
+
       {/* ═══ MAIN APP (Dashboard, Paper, Test, etc.) ═══ */}
-      {user && !["landing", "login"].includes(screen) && (
+      {user && !["landing", "login", "verifyPhone"].includes(screen) && (
         <>
           <div className={`overlay ${sideOpen?'open':''}`} onClick={() => setSideOpen(false)} />
           <div style={{ display: "flex", minHeight: "100vh" }}>
