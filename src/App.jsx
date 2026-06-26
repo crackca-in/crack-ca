@@ -134,6 +134,7 @@ export default function CAPrepPro() {
   const [currentQ, setCurrentQ] = useState(0);
   const [bookmarks, setBookmarks] = useState(new Set());
   const [metadata, setMetadata] = useState(null);
+  const [profile, setProfile] = useState(null);
   const timerRef = useRef(null);
 
   // Persist user, plan, and history to localStorage
@@ -172,13 +173,30 @@ export default function CAPrepPro() {
         joined: su.created_at || new Date().toISOString(),
       };
     };
+    const loadProfile = async (session) => {
+      if (!session || !session.user) { setProfile(null); return; }
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("id, email, name, plan, phone, country, phone_verified_at")
+          .eq("id", session.user.id)
+          .single();
+        if (error) { console.error("Profile load failed:", error); setProfile(null); return; }
+        setProfile(data);
+      } catch (err) {
+        console.error("Profile load exception:", err);
+        setProfile(null);
+      }
+    };
     supabase.auth.getSession().then(({ data }) => {
       setUser(mapUser(data.session));
+      loadProfile(data.session);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(mapUser(session));
+      loadProfile(session);
     });
-    return () => { sub.subscription.unsubscribe(); };
+    return () => { sub.subscription.unsubscribe(); };  
   }, []);
 
   // Timer
