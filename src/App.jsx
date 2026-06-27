@@ -135,6 +135,13 @@ export default function CAPrepPro() {
   const [bookmarks, setBookmarks] = useState(new Set());
   const [metadata, setMetadata] = useState(null);
   const [profile, setProfile] = useState(null);
+  // Block 5 phone-verification flow state
+  const [vpStage, setVpStage] = useState("enter"); // "enter" (typing phone) or "otp" (typing code)
+  const [vpPhone, setVpPhone] = useState("");        // 10 digits the user types
+  const [vpCode, setVpCode] = useState("");          // the OTP code
+  const [vpVerificationId, setVpVerificationId] = useState(null); // from sendOtp
+  const [vpBusy, setVpBusy] = useState(false);       // disables buttons during a call
+  const [vpError, setVpError] = useState("");        // user-facing error/status message
   const timerRef = useRef(null);
 
   // Persist user, plan, and history to localStorage
@@ -411,6 +418,104 @@ export default function CAPrepPro() {
     setScreen("landing");
   };
 
+  // Block 5: send OTP to the entered Indian number via the sendOtp Edge Function
+  const handleSendOtp = async () => {
+    setVpError("");
+    const digits = vpPhone.replace(/\D/g, "");
+    if (!/^\d{10}$/.test(digits)) {
+      setVpError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    setVpBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("sendOtp", {
+        body: { mobileNumber: digits },
+      });
+      if (error) {
+        setVpError("Could not send OTP. Please try again.");
+        setVpBusy(false);
+        return;
+      }
+      if (data && data.ok && data.verificationId) {
+        setVpVerificationId(data.verificationId);
+        setVpStage("otp");
+        setVpError("");
+      } else if (data && data.reason === "rate_limited") {
+        setVpError("Too many attempts. Please wait an hour and try again.");
+      } else {
+        setVpError((data && data.error) || "Could not send OTP. Please try again.");
+      }
+    } catch (e) {
+      setVpError("Network error sending OTP. Please try again.");
+    }
+    setVpBusy(false);
+  };
+
+  // Block 5: verify the OTP code via the verifyOtp Edge Function, then save + link
+  const handleVerifyOtp = async () => {
+    setVpError("");
+    const code = vpCode.replace(/\D/g, "");
+    if (!/^\d{4,8}$/.test(code)) {
+      setVpError("Please enter the code from the SMS.");
+      return;
+    }
+    if (!vpVerificationId) {
+      setVpError("Please request a new code.");
+      setVpStage("enter");
+      return;
+    }
+    setVpBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("verifyOtp", {
+        body: { verificationId: vpVerificationId, code },
+      });
+      if (error) {
+        setVpError("Could not verify the code. Please try again.");
+        setVpBusy(false);
+        return;
+      }
+      if (data && data.ok && data.verified) {
+        await saveVerifiedPhone(vpPhone.replace(/\D/g, ""));
+      } else {
+        const reason = data && data.reason;
+        if (reason === "wrong_otp") setVpError("That code is incorrect. Please try again.");
+        else if (reason === "expired") setVpError("That code has expired. Please request a new one.");
+        else if (reason === "max_attempts") setVpError("Too many attempts. Please request a new code.");
+        else setVpError("Could not verify the code. Please try again.");
+      }
+    } catch (e) {
+      setVpError("Network error verifying code. Please try again.");
+    }
+    setVpBusy(false);
+  };
+
+  // Block 5: save the verified number to the profile (uniqueness enforced by DB)
+  const saveVerifiedPhone = async (digits) => {
+    if (!user) { setVpError("Session expired. Please sign in again."); return; }
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ phone: digits, phone_verified_at: new Date().toISOString() })
+        .eq("id", user.id);
+      if (error) {
+        // 23505 = unique_violation: this number is already linked to another account
+        if (error.code === "23505" || (error.message && error.message.includes("duplicate"))) {
+          setVpError("This number is already linked to another Crack CA account. Please sign in with that account, or use a different number.");
+        } else {
+          setVpError("Could not save your number. Please try again.");
+        }
+        return;
+      }
+      setProfile((p) => (p ? { ...p, phone: digits } : p));
+      setVpError("");
+      setVpStage("enter");
+      setVpCode("");
+      setVpVerificationId(null);
+      setScreen("dashboard");
+    } catch (e) {
+      setVpError("Could not save your number. Please try again.");
+    }
+  };
   const upgradePlan = async (planId) => {
     if (planId === "free") return;
 
@@ -581,13 +686,59 @@ export default function CAPrepPro() {
             <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Verify your phone</h2>
             <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>We need to verify a mobile number for your account.</p>
 
-            {/* TEMPORARY DIAGNOSTIC: shows what the gate detected. Remove before merge. */}
-            <div style={{ fontSize: 12, color: "#9CA3AF", textAlign: "center", marginBottom: 16, padding: 10, border: "1px dashed #374151", borderRadius: 8 }}>
-              Detected profile phone: <strong>{profile ? (profile.phone === null ? "NULL (needs verification)" : profile.phone) : "profile not loaded yet"}</strong>
+            {/* TEMP diagnostic, remove before merge */}
+            <div style={{ fontSize: 11, color: "#9CA3AF", textAlign: "center", marginBottom: 16 }}>
+              (debug: detected phone {profile ? (profile.phone === null ? "NULL" : profile.phone) : "loading"})
             </div>
 
+            {vpStage === "enter" && (
+              <>
+                <label style={{ fontSize: 13, color: "#9CA3AF", display: "block", marginBottom: 6 }}>Mobile number</label>
+                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                  <span style={{ display: "flex", alignItems: "center", padding: "0 12px", borderRadius: 8, background: "#1F2937", color: "#E5E7EB", fontWeight: 600 }}>+91</span>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    maxLength={10}
+                    value={vpPhone}
+                    onChange={(e) => setVpPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    placeholder="10-digit number"
+                    style={{ flex: 1, padding: "10px 12px", borderRadius: 8, border: "1px solid #374151", background: "#111827", color: "#fff", fontSize: 15 }}
+                  />
+                </div>
+                <button className="btn btn-p" style={{ width: "100%" }} disabled={vpBusy} onClick={handleSendOtp}>
+                  {vpBusy ? "Sending..." : "Send OTP"}
+                </button>
+              </>
+            )}
+
+            {vpStage === "otp" && (
+              <>
+                <p style={{ fontSize: 13, color: "#9CA3AF", textAlign: "center", marginBottom: 12 }}>Enter the code sent to +91 {vpPhone}</p>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={8}
+                  value={vpCode}
+                  onChange={(e) => setVpCode(e.target.value.replace(/\D/g, "").slice(0, 8))}
+                  placeholder="Enter OTP"
+                  style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid #374151", background: "#111827", color: "#fff", fontSize: 15, marginBottom: 12, textAlign: "center", letterSpacing: 4 }}
+                />
+                <button className="btn btn-p" style={{ width: "100%", marginBottom: 8 }} disabled={vpBusy} onClick={handleVerifyOtp}>
+                  {vpBusy ? "Verifying..." : "Verify"}
+                </button>
+                <button className="btn" style={{ width: "100%", background: "transparent", color: "#9CA3AF", border: "1px solid #374151" }} disabled={vpBusy} onClick={() => { setVpStage("enter"); setVpCode(""); setVpVerificationId(null); setVpError(""); }}>
+                  Change number
+                </button>
+              </>
+            )}
+
+            {vpError && (
+              <p style={{ fontSize: 13, color: "#F87171", textAlign: "center", marginTop: 12 }}>{vpError}</p>
+            )}
+
             {/* TEMPORARY TEST-ONLY ESCAPE (soft gate). MUST be removed before merge to main. */}
-            <button className="btn btn-p" style={{ width: "100%" }} onClick={() => setScreen("dashboard")}>Continue to dashboard (test only)</button>
+            <button className="btn" style={{ width: "100%", marginTop: 16, background: "transparent", color: "#6B7280", border: "1px dashed #374151" }} onClick={() => setScreen("dashboard")}>Continue to dashboard (test only)</button>
           </div>
         </div>
       )}
