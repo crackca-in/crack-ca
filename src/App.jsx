@@ -686,11 +686,6 @@ export default function CAPrepPro() {
             <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Verify your phone</h2>
             <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>We need to verify a mobile number for your account.</p>
 
-            {/* TEMP diagnostic, remove before merge */}
-            <div style={{ fontSize: 11, color: "#9CA3AF", textAlign: "center", marginBottom: 16 }}>
-              (debug: detected phone {profile ? (profile.phone === null ? "NULL" : profile.phone) : "loading"})
-            </div>
-
             {vpStage === "enter" && (
               <>
                 <label style={{ fontSize: 13, color: "#9CA3AF", display: "block", marginBottom: 6 }}>Mobile number</label>
@@ -736,15 +731,12 @@ export default function CAPrepPro() {
             {vpError && (
               <p style={{ fontSize: 13, color: "#F87171", textAlign: "center", marginTop: 12 }}>{vpError}</p>
             )}
-
-            {/* TEMPORARY TEST-ONLY ESCAPE (soft gate). MUST be removed before merge to main. */}
-            <button className="btn" style={{ width: "100%", marginTop: 16, background: "transparent", color: "#6B7280", border: "1px dashed #374151" }} onClick={() => setScreen("dashboard")}>Continue to dashboard (test only)</button>
           </div>
         </div>
       )}
 
       {/* ═══ MAIN APP (Dashboard, Paper, Test, etc.) ═══ */}
-      {user && !["landing", "login", "verifyPhone"].includes(screen) && (
+      {user && profile && profile.phone && !["landing", "login", "verifyPhone"].includes(screen) && (
         <>
           <div className={`overlay ${sideOpen?'open':''}`} onClick={() => setSideOpen(false)} />
           <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -802,10 +794,7 @@ export default function CAPrepPro() {
                   {screen === "dashboard" && (
                     <div className="fade">
                       <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 4 }}>Welcome back, {user.name.split(' ')[0]}</h1>
-                      {/* TEMPORARY DIAGNOSTIC: remove after debugging the gate */}
-                      <div style={{ fontSize: 12, color: "#FBBF24", marginBottom: 16, padding: 10, border: "1px dashed #F59E0B", borderRadius: 8, wordBreak: "break-all" }}>
-                        DEBUG profile state: {profile === null ? "profile is NULL (not loaded)" : JSON.stringify(profile)}
-                      </div>
+                      
                       <p style={{ color: "#6B7280", marginBottom: 24, fontSize: 14 }}>CA Foundation | ICAI New Scheme | {metadata?.totalQuestions || 0} questions across {PAPERS.length} papers</p>
                       {(() => { const s = overallStats(); return (
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: 12, marginBottom: 28 }}>
