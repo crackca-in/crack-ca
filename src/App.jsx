@@ -651,6 +651,10 @@ export default function CAPrepPro() {
                   {screen === "dashboard" && (
                     <div className="fade">
                       <h1 style={{ fontSize: 26, fontWeight: 800, marginBottom: 4 }}>Welcome back, {user.name.split(' ')[0]}</h1>
+                      {/* TEMPORARY DIAGNOSTIC: remove after debugging the gate */}
+                      <div style={{ fontSize: 12, color: "#FBBF24", marginBottom: 16, padding: 10, border: "1px dashed #F59E0B", borderRadius: 8, wordBreak: "break-all" }}>
+                        DEBUG profile state: {profile === null ? "profile is NULL (not loaded)" : JSON.stringify(profile)}
+                      </div>
                       <p style={{ color: "#6B7280", marginBottom: 24, fontSize: 14 }}>CA Foundation | ICAI New Scheme | {metadata?.totalQuestions || 0} questions across {PAPERS.length} papers</p>
                       {(() => { const s = overallStats(); return (
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: 12, marginBottom: 28 }}>
