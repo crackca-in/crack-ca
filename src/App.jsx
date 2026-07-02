@@ -451,7 +451,8 @@ export default function CAPrepPro() {
     setVpBusy(false);
   };
 
-  // Block 5: verify the OTP code via the verifyOtp Edge Function, then save + link
+  // Block 5: verify the OTP code via the verifyOtp Edge Function.
+  // The server saves the number itself. The browser only routes on the result.
   const handleVerifyOtp = async () => {
     setVpError("");
     const code = vpCode.replace(/\D/g, "");
@@ -474,13 +475,29 @@ export default function CAPrepPro() {
         setVpBusy(false);
         return;
       }
-      if (data && data.ok && data.verified) {
-        await saveVerifiedPhone(vpPhone.replace(/\D/g, ""));
+      if (data && data.ok && data.verified && data.saved) {
+        const digits = vpPhone.replace(/\D/g, "");
+        setProfile((p) => (p ? { ...p, phone: digits } : p));
+        setVpError("");
+        setVpStage("enter");
+        setVpCode("");
+        setVpVerificationId(null);
+        setScreen("dashboard");
+      } else if (data && data.ok && data.verified && data.reason === "phone_taken") {
+        setVpError("This number is already linked to another Crack CA account. Please sign in with that account, or use a different number.");
+      } else if (data && data.ok && data.verified && data.reason === "phone_already_set") {
+        setVpError("Your account already has a verified number. Please refresh the page.");
       } else {
         const reason = data && data.reason;
         if (reason === "wrong_otp") setVpError("That code is incorrect. Please try again.");
         else if (reason === "expired") setVpError("That code has expired. Please request a new one.");
         else if (reason === "max_attempts") setVpError("Too many attempts. Please request a new code.");
+        else if (reason === "already_used" || reason === "invalid_verification_id") {
+          setVpError("Please request a new code.");
+          setVpStage("enter");
+          setVpCode("");
+          setVpVerificationId(null);
+        }
         else setVpError("Could not verify the code. Please try again.");
       }
     } catch (e) {
@@ -489,33 +506,6 @@ export default function CAPrepPro() {
     setVpBusy(false);
   };
 
-  // Block 5: save the verified number to the profile (uniqueness enforced by DB)
-  const saveVerifiedPhone = async (digits) => {
-    if (!user) { setVpError("Session expired. Please sign in again."); return; }
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ phone: digits, phone_verified_at: new Date().toISOString() })
-        .eq("id", user.id);
-      if (error) {
-        // 23505 = unique_violation: this number is already linked to another account
-        if (error.code === "23505" || (error.message && error.message.includes("duplicate"))) {
-          setVpError("This number is already linked to another Crack CA account. Please sign in with that account, or use a different number.");
-        } else {
-          setVpError("Could not save your number. Please try again.");
-        }
-        return;
-      }
-      setProfile((p) => (p ? { ...p, phone: digits } : p));
-      setVpError("");
-      setVpStage("enter");
-      setVpCode("");
-      setVpVerificationId(null);
-      setScreen("dashboard");
-    } catch (e) {
-      setVpError("Could not save your number. Please try again.");
-    }
-  };
   const upgradePlan = async (planId) => {
     if (planId === "free") return;
 
