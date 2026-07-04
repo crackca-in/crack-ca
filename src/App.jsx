@@ -425,6 +425,99 @@ export default function CAPrepPro() {
     setScreen("landing");
   };
 
+  // Block 5: phone LOGIN, step 1: request an OTP via loginSendOtp.
+  // The server answers neutrally whether or not the number is linked.
+  const handlePlSendOtp = async () => {
+    setPlError("");
+    const digits = plPhone.replace(/\D/g, "");
+    if (!/^\d{10}$/.test(digits)) {
+      setPlError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    setPlBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("loginSendOtp", {
+        body: { mobileNumber: digits },
+      });
+      if (error) {
+        setPlError("Could not send OTP. Please try again.");
+        setPlBusy(false);
+        return;
+      }
+      if (data && data.ok && data.verificationId) {
+        setPlVerificationId(data.verificationId);
+        setPlStage("otp");
+        setPlError("");
+      } else {
+        setPlError((data && data.error) || "Could not send OTP. Please try again.");
+      }
+    } catch (e) {
+      setPlError("Network error sending OTP. Please try again.");
+    }
+    setPlBusy(false);
+  };
+
+  // Block 5: phone LOGIN, step 2: verify the code via loginVerifyOtp,
+  // then exchange the returned one-time token for a real Supabase session.
+  const handlePlVerifyOtp = async () => {
+    setPlError("");
+    const code = plCode.replace(/\D/g, "");
+    if (!/^\d{4,8}$/.test(code)) {
+      setPlError("Please enter the code from the SMS.");
+      return;
+    }
+    if (!plVerificationId) {
+      setPlError("Please request a new code.");
+      setPlStage("enter");
+      return;
+    }
+    setPlBusy(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("loginVerifyOtp", {
+        body: { verificationId: plVerificationId, code },
+      });
+      if (error) {
+        setPlError("Could not verify the code. Please try again.");
+        setPlBusy(false);
+        return;
+      }
+      if (data && data.ok && data.verified && data.login && data.tokenHash) {
+        const sessRes = await supabase.auth.verifyOtp({ token_hash: data.tokenHash, type: "magiclink" });
+        if (sessRes.error) {
+          setPlError("Could not sign you in. Please try again.");
+          setPlBusy(false);
+          return;
+        }
+        setPlStage("enter");
+        setPlPhone("");
+        setPlCode("");
+        setPlVerificationId(null);
+        setPlError("");
+        setScreen("dashboard");
+      } else {
+        const reason = data && data.reason;
+        if (reason === "wrong_otp" || reason === "invalid_verification_id") {
+          setPlError("That code is incorrect. Please try again.");
+        } else if (reason === "expired") {
+          setPlError("That code has expired. Please request a new one.");
+          setPlStage("enter");
+          setPlCode("");
+          setPlVerificationId(null);
+        } else if (reason === "already_used" || reason === "max_attempts") {
+          setPlError("Please request a new code.");
+          setPlStage("enter");
+          setPlCode("");
+          setPlVerificationId(null);
+        } else {
+          setPlError("Could not verify the code. Please try again.");
+        }
+      }
+    } catch (e) {
+      setPlError("Network error verifying code. Please try again.");
+    }
+    setPlBusy(false);
+  };
+
   // Block 5: send OTP to the entered Indian number via the sendOtp Edge Function
   const handleSendOtp = async () => {
     setVpError("");
@@ -674,8 +767,56 @@ export default function CAPrepPro() {
               </g>
             </svg>
             <h2 style={{ fontSize: 22, fontWeight: 800, textAlign: "center", marginBottom: 4 }}>Welcome to Crack CA</h2>
-            <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>Sign in with your Google account to start practicing</p>
+            <p style={{ fontSize: 13, color: "#6B7280", textAlign: "center", marginBottom: 24 }}>Sign in to start practicing</p>
               <button className="btn btn-p" style={{ width: "100%" }} onClick={doLogin}>Sign in with Google</button>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "16px 0" }}>
+              <div style={{ flex: 1, height: 1, background: "#1F2937" }} />
+              <span style={{ fontSize: 11, color: "#4B5563" }}>OR</span>
+              <div style={{ flex: 1, height: 1, background: "#1F2937" }} />
+            </div>
+            {plStage === "enter" && (
+              <>
+                <label style={{ fontSize: 13, color: "#9CA3AF", display: "block", marginBottom: 6 }}>Sign in with phone</label>
+                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+                  <span style={{ display: "flex", alignItems: "center", padding: "0 12px", borderRadius: 8, background: "#1F2937", color: "#E5E7EB", fontWeight: 600 }}>+91</span>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    maxLength={10}
+                    value={plPhone}
+                    onChange={(e) => setPlPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    placeholder="10-digit number"
+                    style={{ flex: 1, padding: "10px 12px", borderRadius: 8, border: "1px solid #374151", background: "#111827", color: "#fff", fontSize: 15 }}
+                  />
+                </div>
+                <button className="btn btn-s" style={{ width: "100%" }} disabled={plBusy} onClick={handlePlSendOtp}>
+                  {plBusy ? "Sending..." : "Send OTP"}
+                </button>
+              </>
+            )}
+            {plStage === "otp" && (
+              <>
+                <p style={{ fontSize: 13, color: "#9CA3AF", textAlign: "center", marginBottom: 12 }}>If this number is linked to a Crack CA account, an OTP has been sent to +91 {plPhone}</p>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength={8}
+                  value={plCode}
+                  onChange={(e) => setPlCode(e.target.value.replace(/\D/g, "").slice(0, 8))}
+                  placeholder="Enter OTP"
+                  style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid #374151", background: "#111827", color: "#fff", fontSize: 15, marginBottom: 12, textAlign: "center", letterSpacing: 4 }}
+                />
+                <button className="btn btn-p" style={{ width: "100%", marginBottom: 8 }} disabled={plBusy} onClick={handlePlVerifyOtp}>
+                  {plBusy ? "Verifying..." : "Verify and Sign in"}
+                </button>
+                <button className="btn" style={{ width: "100%", background: "transparent", color: "#9CA3AF", border: "1px solid #374151" }} disabled={plBusy} onClick={() => { setPlStage("enter"); setPlCode(""); setPlVerificationId(null); setPlError(""); }}>
+                  Change number
+                </button>
+              </>
+            )}
+            {plError && (
+              <p style={{ fontSize: 13, color: "#F87171", textAlign: "center", marginTop: 12 }}>{plError}</p>
+            )}
             <p style={{ fontSize: 11, color: "#4B5563", textAlign: "center", marginTop: 12 }}>By continuing you agree to our Terms of Service</p>
           </div>
         </div>
