@@ -490,7 +490,12 @@ export default function CAPrepPro() {
       } else {
         const reason = data && data.reason;
         if (reason === "wrong_otp") setVpError("That code is incorrect. Please try again.");
-        else if (reason === "expired") setVpError("That code has expired. Please request a new one.");
+        else if (reason === "expired") {
+          setVpError("That code has expired. Please request a new one.");
+          setVpStage("enter");
+          setVpCode("");
+          setVpVerificationId(null);
+        }
         else if (reason === "max_attempts") setVpError("Too many attempts. Please request a new code.");
         else if (reason === "already_used" || reason === "invalid_verification_id") {
           setVpError("Please request a new code.");
