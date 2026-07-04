@@ -142,6 +142,13 @@ export default function CAPrepPro() {
   const [vpVerificationId, setVpVerificationId] = useState(null); // from sendOtp
   const [vpBusy, setVpBusy] = useState(false);       // disables buttons during a call
   const [vpError, setVpError] = useState("");        // user-facing error/status message
+  // Block 5: phone LOGIN state (pl = phone login), separate from verification (vp)
+  const [plStage, setPlStage] = useState("enter"); // "enter" (typing phone) or "otp" (typing code)
+  const [plPhone, setPlPhone] = useState("");
+  const [plCode, setPlCode] = useState("");
+  const [plVerificationId, setPlVerificationId] = useState(null);
+  const [plBusy, setPlBusy] = useState(false);
+  const [plError, setPlError] = useState("");
   const timerRef = useRef(null);
 
   // Persist user, plan, and history to localStorage
