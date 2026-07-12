@@ -46,7 +46,7 @@ const APP_CONFIG = {
   totalPapers: 4,
   totalMarks: 400,
   plans: [
-    { id: "free", name: "Free", price: 0, label: "₹0", features: ["P1 Chapters 1-3 (full access)", "P2/P3/P4: 2 chapters each (full access)", "12-Question Sampler (2 attempts)", "273 free questions across all 4 papers", "Detailed explanations on every question"], color: "#6B7280" },
+    { id: "free", name: "Free", price: 0, label: "₹0", features: ["P1 Chapters 1-3 (full access)", "P2/P3/P4: 2 chapters each (full access)", "12-Question Sampler (2 attempts)", "258 free questions across all 4 papers", "Detailed explanations on every question"], color: "#6B7280" },
     { id: "foundation", name: "Foundation Pass", price: 999, label: "₹999", badge: "POPULAR", features: ["All 4 papers", "Full question bank", "Performance analytics", "Chapter-wise tests", "Full mock exams"], color: "#4F46E5" },
     { id: "mentor", name: "Foundation + Mentor", price: 2499, label: "₹2,499", features: ["Everything in Foundation Pass", "Study planner", "Weak area deep-dive", "Spaced repetition", "Priority updates"], color: "#7C3AED" },
     { id: "bundle", name: "All Levels Bundle", price: 4999, label: "₹4,999/yr", features: ["Foundation + Inter + Final", "Lifetime content updates", "Early access to new papers"], color: "#EC4899" },
@@ -213,8 +213,7 @@ function CAPrepPro() {
   // Auto-login from localStorage
   useEffect(() => { if (user && screen === "landing") setScreen("dashboard"); }, [user]);
 // Block 5 gate: once profile loads, route phone-less users to verifyPhone.
-  // SOFT GATE during development. The verifyPhone screen has a temporary
-  // "Continue to dashboard" escape that MUST be removed before merge to main.
+  // HARD GATE since 27 June: no escape, the dashboard requires a verified phone.
   useEffect(() => {
     if (!user) return;
     if (!profile) return; // wait until profile has actually loaded
@@ -813,7 +812,7 @@ function CAPrepPro() {
             ))}
           </div>
           <button className="btn btn-p" style={{ fontSize: 16, padding: "16px 40px" }} onClick={() => setScreen("login")}>Start Free Practice →</button>
-          <p style={{ marginTop: 16, fontSize: 13, color: "#4B5563" }}>No credit card required. Free tier: 273 questions across 9 chapters plus a 12-question 4-Paper Sampler.</p>
+          <p style={{ marginTop: 16, fontSize: 13, color: "#4B5563" }}>No credit card required. Free tier: 258 questions across 9 chapters plus a 12-question 4-Paper Sampler.</p>
           <div style={{ marginTop: 48, display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
             {PAPERS.map(p => (
               <div key={p.id} style={{ textAlign: "center" }}>
