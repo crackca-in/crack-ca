@@ -1,6 +1,41 @@
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabaseClient";
 
+// Block 5: last line of defence. Any uncaught render error shows a friendly
+// reload card instead of a dead white page.
+class CrashGuard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { crashed: false };
+  }
+  static getDerivedStateFromError() {
+    return { crashed: true };
+  }
+  componentDidCatch(error, info) {
+    console.error("Crack CA crash:", error, info);
+  }
+  render() {
+    if (this.state.crashed) {
+      return (
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0B0F19", color: "#E2E8F0", fontFamily: "'Inter',system-ui,sans-serif", padding: 20 }}>
+          <div style={{ maxWidth: 400, width: "100%", padding: 32, background: "#111827", border: "1px solid #1F2937", borderRadius: 14, textAlign: "center" }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>&#128736;</div>
+            <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>Something went wrong</h2>
+            <p style={{ fontSize: 14, color: "#9CA3AF", marginBottom: 20 }}>Please reload the page. Your account and progress are safe.</p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{ padding: "12px 24px", borderRadius: 10, border: "none", cursor: "pointer", fontWeight: 600, fontSize: 14, color: "#fff", background: "linear-gradient(135deg,#6366F1,#8B5CF6)" }}
+            >
+              Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const APP_CONFIG = {
   name: "Crack CA",
   tagline: "Crack CA Foundation with confidence",
@@ -118,7 +153,7 @@ const ALL_CHAPTERS = PAPERS.flatMap(p => p.chapters.map(c => ({ ...c, paper: p.i
 const IDLE_LIMIT_MS = 2 * 60 * 1000;
 const IDLE_CHECK_EVERY_MS = 30 * 1000;
 
-export default function CAPrepPro() {
+function CAPrepPro() {
   // State
   const [screen, setScreen] = useState("landing");
   const [user, setUser] = useState(() => { try { const s = localStorage.getItem("crackca_user"); return s ? JSON.parse(s) : null; } catch { return null; } });
@@ -1156,7 +1191,7 @@ export default function CAPrepPro() {
                                 </div>
                                 <p style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.7, marginBottom: 18, color: "#F1F5F9" }}>{q.q}</p>
                                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                                  {q.opts.map((o, oi) => (
+                                  {(Array.isArray(q.opts) ? q.opts : []).map((o, oi) => (
                                     <button key={oi} className={`opt ${answers[currentQ] === oi ? 'sel' : ''}`}
                                       onClick={() => setAnswers({ ...answers, [currentQ]: oi })}>
                                       <span style={{ width: 26, height: 26, borderRadius: "50%", border: "1px solid currentColor", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
@@ -1244,7 +1279,7 @@ export default function CAPrepPro() {
                                 </div>
                                 <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 10, color: "#CBD5E1" }}>{q.q}</p>
                                 <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 8 }}>
-                                  {q.opts.map((o, oi) => (
+                                  {(Array.isArray(q.opts) ? q.opts : []).map((o, oi) => (
                                     <div key={oi} className={`opt ${oi === q.a ? 'correct' : userAns === oi ? 'wrong' : ''}`} style={{ cursor: "default", padding: "10px 14px" }}>
                                       <span style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid currentColor", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, flexShrink: 0 }}>{String.fromCharCode(65 + oi)}</span>
                                       <span style={{ flex: 1, fontSize: 13 }}>{o}</span>
@@ -1464,5 +1499,13 @@ export default function CAPrepPro() {
         </>
       )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <CrashGuard>
+      <CAPrepPro />
+    </CrashGuard>
   );
 }
