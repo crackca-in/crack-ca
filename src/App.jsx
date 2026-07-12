@@ -148,9 +148,8 @@ const PAPERS = [
 
 const ALL_CHAPTERS = PAPERS.flatMap(p => p.chapters.map(c => ({ ...c, paper: p.id, paperName: p.name })));
 
-// Block 5: idle timeout limit. TESTING VALUE, 2 minutes.
-// Before merge this line becomes: const IDLE_LIMIT_MS = 2 * 60 * 60 * 1000;
-const IDLE_LIMIT_MS = 2 * 60 * 1000;
+// Block 5: idle timeout limit: 2 hours of inactivity signs the user out.
+const IDLE_LIMIT_MS = 2 * 60 * 60 * 1000;
 const IDLE_CHECK_EVERY_MS = 30 * 1000;
 
 function CAPrepPro() {
