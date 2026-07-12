@@ -113,6 +113,11 @@ const PAPERS = [
 
 const ALL_CHAPTERS = PAPERS.flatMap(p => p.chapters.map(c => ({ ...c, paper: p.id, paperName: p.name })));
 
+// Block 5: idle timeout limit. TESTING VALUE, 2 minutes.
+// Before merge this line becomes: const IDLE_LIMIT_MS = 2 * 60 * 60 * 1000;
+const IDLE_LIMIT_MS = 2 * 60 * 1000;
+const IDLE_CHECK_EVERY_MS = 30 * 1000;
+
 export default function CAPrepPro() {
   // State
   const [screen, setScreen] = useState("landing");
@@ -150,6 +155,7 @@ export default function CAPrepPro() {
   const [plBusy, setPlBusy] = useState(false);
   const [plError, setPlError] = useState("");
   const timerRef = useRef(null);
+  const lastActivityRef = useRef(Date.now()); // Block 5: last real user activity
 
   // Persist user, plan, and history to localStorage
   useEffect(() => { try { if (user) localStorage.setItem("crackca_user", JSON.stringify(user)); else localStorage.removeItem("crackca_user"); } catch {} }, [user]);
@@ -182,6 +188,38 @@ export default function CAPrepPro() {
       setScreen("verifyPhone");
     }
   }, [user, profile, screen]);
+
+  // Block 5: idle timeout, part 1. Any real activity resets the clock.
+  useEffect(() => {
+    const touch = () => { lastActivityRef.current = Date.now(); };
+    window.addEventListener("mousedown", touch);
+    window.addEventListener("keydown", touch);
+    window.addEventListener("touchstart", touch, { passive: true });
+    window.addEventListener("scroll", touch, { passive: true });
+    return () => {
+      window.removeEventListener("mousedown", touch);
+      window.removeEventListener("keydown", touch);
+      window.removeEventListener("touchstart", touch);
+      window.removeEventListener("scroll", touch);
+    };
+  }, []);
+
+  // Block 5: idle timeout, part 2. Checks every 30 seconds. Suspended while a
+  // test is in progress, and an in-progress test keeps pushing the clock
+  // forward, so finishing a long mock never counts as idle time afterwards.
+  useEffect(() => {
+    if (!user) return;
+    const id = setInterval(() => {
+      if (screen === "test" && !submitted) {
+        lastActivityRef.current = Date.now();
+        return;
+      }
+      if (Date.now() - lastActivityRef.current >= IDLE_LIMIT_MS) {
+        doLogout();
+      }
+    }, IDLE_CHECK_EVERY_MS);
+    return () => clearInterval(id);
+  }, [user, screen, submitted]);
   
     // Supabase auth session: real source of truth for who is logged in
   useEffect(() => {
